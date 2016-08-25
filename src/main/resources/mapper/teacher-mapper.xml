@@ -18,8 +18,7 @@
         UPDATE db_examination.teacher
         SET
             email = #{email}, 
-            username = #{username}, 
-            password = #{password}
+            username = #{username}
         WHERE id = #{id}
     </update>
     <delete id="remove">
@@ -28,8 +27,8 @@
     </delete>
     <insert id="create" parameterType="teacher" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO db_examination.teacher (
-            email, 
-            username, 
+            email,
+            username,
             password
         )
         VALUES (

@@ -6,6 +6,7 @@ import demo.model.Teacher;
 import demo.service.AdminService;
 import demo.service.AssistantService;
 import demo.service.TeacherService;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,34 +30,76 @@ public class AdminController extends BaseController {
         admin = adminService.login(admin);
         if (admin != null) {
             session.setAttribute("admin", admin);
-            return "redirect:/admin/index.jsp";
+            return "redirect:/admin/admin.jsp";
         }
         request.setAttribute("message", "邮箱或密码错误");
-        return "/index.jsp";
+        return "/admin/index.jsp";
     }
 
-    @RequestMapping("create")
-    private String create(Admin admin, String role) {
-        if (role.equals("admin")) {
-            adminService.create(admin);
-        }
+    @RequestMapping("createTeacher")
+    private String createTeacher(Teacher teacher) {
+        teacher.setPassword(encryptPassword(teacher.getPassword()));
+        teacherService.create(teacher);
+        return "redirect:/admin/listTeacher";
+    }
 
-        if (role.equals("teacher")) {
-            Teacher teacher = new Teacher();
-            teacher.setEmail(admin.getEmail());
-            teacher.setUsername(admin.getUsername());
-            teacher.setPassword(admin.getPassword());
-            teacherService.create(teacher);
-        }
+    @RequestMapping("createAssistant")
+    private String createAssistant(Assistant assistant) {
+        assistant.setPassword(encryptPassword(assistant.getPassword()));
+        assistantService.create(assistant);
+        return "redirect:/admin/listAssistant";
+    }
 
-        if (role.equals("assistant")) {
-            Assistant assistant = new Assistant();
-            assistant.setEmail(admin.getEmail());
-            assistant.setUsername(admin.getUsername());
-            assistant.setPassword(admin.getPassword());
-            assistantService.create(assistant);
-        }
+    @RequestMapping("listTeacher")
+    private String listTeacher() {
+        session.setAttribute("teachers", teacherService.list());
+        return "redirect:/admin/teacher.jsp";
+    }
 
-        return "redirect:/admin/index.jsp";
+    @RequestMapping("listAssistant")
+    private String listAssistant() {
+        session.setAttribute("assistants", assistantService.list());
+        return "redirect:/admin/assistant.jsp";
+    }
+
+    @RequestMapping("queryOneTeacher/{id}")
+    private String queryOneTeacher(@PathVariable int id) {
+        session.setAttribute("teacher", teacherService.queryById(id));
+        return "redirect:/admin/editTeacher.jsp";
+    }
+
+    @RequestMapping("modifyTeacher")
+    private String modifyTeacher(Teacher teacher) {
+        teacherService.modify(teacher);
+        return "redirect:/admin/listTeacher";
+    }
+
+    @RequestMapping("queryOneAssistant/{id}")
+    private String queryOneAssistant(@PathVariable int id) {
+        session.setAttribute("assistant", assistantService.queryById(id));
+        return "redirect:/admin/editAssistant.jsp";
+    }
+
+    @RequestMapping("modifyAssistant")
+    private String modifyAssistant(Assistant assistant) {
+        assistantService.modify(assistant);
+        return "redirect:/admin/listAssistant";
+    }
+
+    @RequestMapping("removeTeacher/{id}")
+    private String removeTeacher(@PathVariable int id) {
+        teacherService.remove(id);
+        return "redirect:/admin/listTeacher";
+    }
+
+    @RequestMapping("removeAssistant/{id}")
+    private String removeAssistant(@PathVariable int id) {
+        assistantService.remove(id);
+        return "redirect:/admin/listAssistant";
+    }
+
+    private String encryptPassword(String password) {
+        StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+        return encryptor.encryptPassword(password);
     }
 }

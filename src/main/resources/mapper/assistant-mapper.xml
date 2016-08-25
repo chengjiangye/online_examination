@@ -18,8 +18,7 @@
         UPDATE db_examination.assistant
         SET
             email = #{email}, 
-            username = #{username}, 
-            password = #{password}
+            username = #{username}
         WHERE id = #{id}
     </update>
     <delete id="remove">
