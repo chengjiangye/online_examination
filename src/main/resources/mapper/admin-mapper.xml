@@ -9,4 +9,16 @@
         FROM db_examination.admin
         WHERE email = #{email}
     </select>
+    <insert id="create" parameterType="admin" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO db_examination.admin (
+            email,
+            username,
+            password
+        )
+        VALUES (
+            #{email},
+            #{username},
+            #{password}
+        );
+    </insert>
 </mapper>
