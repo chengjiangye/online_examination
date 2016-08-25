@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 class ComponentsGenerator {
     // ------------- edit PACKAGE and DATABASE -------------
     private final static String PACKAGE = "demo";
-    private final static String DATABASE = "db_test";
+    private final static String DATABASE = "db_examination";
     // -----------------------------------------------------
     private final static String TYPE_PATH = "src/main/java/";
     private static final String VIEW_PATH = "src/main/webapp/";

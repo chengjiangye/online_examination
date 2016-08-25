@@ -2,9 +2,15 @@
 <%@ include file="common/inc.jsp"%>
 <html>
 <head>
-    <title>index page</title>
+    <title>首页</title>
 </head>
 <body>
-<h1>index page</h1>
+<h1>首页</h1>
+<form action="${ctx}/admin/login">
+    <input type="text" name="email" placeholder="邮箱" value="admin@tsinghua.edu.cn"><br>
+    <input type="password" name="password" placeholder="密码" value="123"><br>
+    <input type="submit" value="登录">
+</form>
+${requestScope.message}
 </body>
 </html>
