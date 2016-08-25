@@ -2,7 +2,7 @@
 <%@ include file="common/inc.jsp"%>
 <html>
 <head>
-    <title>首页</title>
+    <title>首页 - 在线考试系统</title>
 </head>
 <body>
 <h1>首页</h1>
