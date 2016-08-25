@@ -3,6 +3,9 @@
 <html>
 <head>
     <title>首页 - 在线考试系统</title>
+    <style>
+        @import "${ctx}/static/css/style.css";
+    </style>
 </head>
 <body>
 <h1>首页</h1>
