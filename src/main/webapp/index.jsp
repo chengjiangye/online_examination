@@ -12,5 +12,6 @@
 <a href="${ctx}/admin/index.jsp">管理员登录</a>
 <a href="${ctx}/teacher/index.jsp">教师登录</a>
 <a href="${ctx}/assistant/index.jsp">教务登录</a>
+<a href="${ctx}/student/queryAllClasses">学生注册</a>
 </body>
 </html>
