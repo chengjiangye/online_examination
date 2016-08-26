@@ -1,5 +1,6 @@
 package demo.service.impl;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,5 +14,19 @@ public class AssistantServiceImpl extends GenericServiceImpl<Assistant, Integer>
     @Autowired
     public AssistantServiceImpl(GenericDao<Assistant, Integer> genericDao) {
         super(genericDao);
+    }
+
+    @Override
+    public Assistant login(Assistant assistant) {
+        String plainPassword = assistant.getPassword();
+        assistant = genericDao.query("assistant.queryAssistantByEmail", assistant.getEmail());
+        if (assistant != null) {
+            String encryptedPassword = assistant.getPassword();
+            StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+            if (encryptor.checkPassword(plainPassword, encryptedPassword)) {
+                return assistant;
+            }
+        }
+        return null;
     }
 }

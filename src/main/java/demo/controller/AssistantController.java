@@ -14,33 +14,14 @@ public class AssistantController extends BaseController {
     @Autowired
     private AssistantService assistantService;
 
-    @RequestMapping("create")
-    private String create(Assistant assistant) {
-        assistantService.create(assistant);
-        return "redirect:list";
-    }
-
-    @RequestMapping("list")
-    private String list() {
-        session.setAttribute("list", assistantService.list());
-        return "redirect:/assistant/list.jsp";
-    }
-
-    @RequestMapping("queryById/{id}")
-    private String search(@PathVariable("id") Integer id) {
-        session.setAttribute("assistant", assistantService.queryById(id));
-        return "redirect:/assistant/edit.jsp";
-    }
-
-    @RequestMapping("modify")
-    private String modify(Assistant assistant) {
-        assistantService.modify(assistant);
-        return "redirect:list";
-    }
-
-    @RequestMapping("remove/{id}")
-    private String remove(@PathVariable("id") Integer id) {
-        assistantService.remove(id);
-        return "redirect:/assistant/list";
+    @RequestMapping("login")
+    private String login(Assistant assistant) {
+        assistant = assistantService.login(assistant);
+        if (assistant != null) {
+            session.setAttribute("assistant", assistant);
+            return "redirect:/assistant/assistant.jsp";
+        }
+        request.setAttribute("message", "邮箱或密码错误");
+        return "/assistant/index.jsp";
     }
 }

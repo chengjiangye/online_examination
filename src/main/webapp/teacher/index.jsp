@@ -2,11 +2,16 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>teacher index page</title>
+        <title>登录 - 教师</title>
     </head>
     <body>
-        <h1>Teacher Index</h1>
-        <p><a href="${ctx}/teacher/create.jsp">CREATE</a></p>
-        <p><a href="${ctx}/teacher/list">LIST</a></p>
+    <h1>登录</h1>
+    <hr>
+    <form action="${ctx}/teacher/login" method="post">
+        <input type="text" name="email" placeholder="邮箱" value="teacher@tsinghua.edu.cn"><br>
+        <input type="password" name="password" placeholder="密码" value="123"><br>
+        <input type="submit" value="登录">
+    </form>
+    ${requestScope.message}
     </body>
 </html>

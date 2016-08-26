@@ -37,4 +37,9 @@
             #{password}
         );
     </insert>
+    <select id="queryAssistantByEmail" parameterType="java.lang.String" resultType="assistant">
+        SELECT *
+        FROM db_examination.assistant
+        WHERE email = #{email}
+    </select>
 </mapper>

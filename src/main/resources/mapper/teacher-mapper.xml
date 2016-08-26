@@ -17,7 +17,7 @@
     <update id="modify">
         UPDATE db_examination.teacher
         SET
-            email = #{email}, 
+            email = #{email},
             username = #{username}
         WHERE id = #{id}
     </update>
@@ -32,9 +32,14 @@
             password
         )
         VALUES (
-            #{email}, 
-            #{username}, 
+            #{email},
+            #{username},
             #{password}
         );
     </insert>
+    <select id="queryTeacherByEmail" parameterType="java.lang.String" resultType="teacher">
+        SELECT *
+        FROM db_examination.teacher
+        WHERE email = #{email}
+    </select>
 </mapper>

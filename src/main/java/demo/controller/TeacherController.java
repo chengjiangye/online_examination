@@ -14,33 +14,14 @@ public class TeacherController extends BaseController {
     @Autowired
     private TeacherService teacherService;
 
-    @RequestMapping("create")
-    private String create(Teacher teacher) {
-        teacherService.create(teacher);
-        return "redirect:list";
-    }
-
-    @RequestMapping("list")
-    private String list() {
-        session.setAttribute("list", teacherService.list());
-        return "redirect:/teacher/list.jsp";
-    }
-
-    @RequestMapping("queryById/{id}")
-    private String search(@PathVariable("id") Integer id) {
-        session.setAttribute("teacher", teacherService.queryById(id));
-        return "redirect:/teacher/edit.jsp";
-    }
-
-    @RequestMapping("modify")
-    private String modify(Teacher teacher) {
-        teacherService.modify(teacher);
-        return "redirect:list";
-    }
-
-    @RequestMapping("remove/{id}")
-    private String remove(@PathVariable("id") Integer id) {
-        teacherService.remove(id);
-        return "redirect:/teacher/list";
+    @RequestMapping("login")
+    private String login(Teacher teacher) {
+        teacher = teacherService.login(teacher);
+        if (teacher != null) {
+            session.setAttribute("teacher", teacher);
+            return "redirect:/teacher/teacher.jsp";
+        }
+        request.setAttribute("message", "邮箱或密码错误");
+        return "/teacher/index.jsp";
     }
 }

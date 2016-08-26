@@ -12,8 +12,7 @@
     <title>登录 - 管理员</title>
 </head>
 <body>
-<h1>登录 - 管理员</h1>
-系统管理员：${sessionScope.admin.username}
+<h1>登录</h1>
 <hr>
 <form action="${ctx}/admin/login" method="post">
     <input type="text" name="email" placeholder="邮箱" value="admin@tsinghua.edu.cn"><br>
