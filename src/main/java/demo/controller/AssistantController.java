@@ -19,7 +19,7 @@ public class AssistantController extends BaseController {
         assistant = assistantService.login(assistant);
         if (assistant != null) {
             session.setAttribute("assistant", assistant);
-            return "redirect:/assistant/assistant.jsp";
+            return "redirect:/class/list";
         }
         request.setAttribute("message", "邮箱或密码错误");
         return "/assistant/index.jsp";

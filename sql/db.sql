@@ -46,6 +46,20 @@ CREATE TABLE db_examination.assistant (
 )
   COMMENT '教务表';
 
+-- table class
+DROP TABLE IF EXISTS db_examination.class;
+CREATE TABLE db_examination.class (
+  id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY
+  COMMENT 'PK',
+  title  VARCHAR(255) NOT NULL
+  COMMENT '班级名称',
+  start  DATE         NOT NULL
+  COMMENT '开班日期',
+  finish DATE         NOT NULL
+  COMMENT '结业日期'
+)
+  COMMENT '班级表';
+
 
 SELECT *
 FROM db_examination.admin;
@@ -55,3 +69,6 @@ FROM db_examination.teacher;
 
 SELECT *
 FROM db_examination.assistant;
+
+SELECT *
+FROM db_examination.class;
