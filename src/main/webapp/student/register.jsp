@@ -8,12 +8,13 @@
 </head>
 <body>
 <h1>注册</h1>
-<form action="${ctx}/student/register" method="post">
-    班级 <select name="classId">
+<form action="${ctx}/student/register" method="post" enctype="multipart/form-data">
+    班级
+    <select name="classId">
     <c:forEach var="clazz" items="${sessionScope.classes}">
         <option value="${clazz.id}">${clazz.title}</option>
     </c:forEach>
-</select><br>
+    </select><br>
     <input name="email" placeholder="EMAIL" value="student@tsinghua.edu.cn"><br>
     <input name="username" placeholder="USERNAME" value="学生"><br>
     <input type="password" name="password" placeholder="密码" value="123"><br>
@@ -28,7 +29,7 @@
     毕业日期 <input name="graduation" placeholder="GRADUATION" value="2012-7-1"><br>
     <textarea name="training" placeholder="TRAINING">无</textarea><br>
     <textarea name="experience" placeholder="EXPERIENCE">无</textarea><br>
-    上传照片 <input type="file" name="photo" placeholder="PHOTO"><br>
+    上传照片 <input type="file" name="photoFile" placeholder="PHOTO"><br>
     <textarea name="remark" placeholder="REMARK">备注信息</textarea><br>
     <input name="card" placeholder="CARD" value="20160001"><br>
     <input type="submit" value="注册">

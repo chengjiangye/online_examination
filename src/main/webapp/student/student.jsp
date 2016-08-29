@@ -16,6 +16,7 @@
     <c:redirect url="${ctx}/student/index.jsp"/>
 </c:if>
 <h1>首页</h1>
-学生：${sessionScope.student.username}
+学生：${sessionScope.student.username}<br>
+<img src="${ctx}/static/photo/${sessionScope.student.photo}" alt="${sessionScope.student.username}" title="${sessionScope.student.username}" width="80">
 </body>
 </html>

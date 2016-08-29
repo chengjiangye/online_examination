@@ -7,10 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("student")
 public class StudentController extends BaseController {
+
+    public static final String PHOTO_PATH = "/static/photo";
 
     @Autowired
     private StudentService studentService;
@@ -19,7 +26,13 @@ public class StudentController extends BaseController {
     private ClassService classService;
 
     @RequestMapping("register")
-    private String register(Student student) {
+    private String register(Student student, @RequestParam MultipartFile photoFile) throws IOException {
+
+        String photoPath = application.getRealPath(PHOTO_PATH);
+        photoFile.transferTo(new File(photoPath, photoFile.getOriginalFilename()));
+
+        student.setPhoto(photoFile.getOriginalFilename());
+
         if (studentService.register(student, request.getRemoteAddr())) {
             return "redirect:/student/index.jsp";
         }
