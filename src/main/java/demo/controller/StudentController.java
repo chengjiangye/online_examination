@@ -1,6 +1,7 @@
 package demo.controller;
 
 import demo.model.Student;
+import demo.service.ClassService;
 import demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +15,16 @@ public class StudentController extends BaseController {
     @Autowired
     private StudentService studentService;
 
-    @RequestMapping("create")
-    private String create(Student student) {
-        studentService.create(student);
-        return "redirect:list";
+    @Autowired
+    private ClassService classService;
+
+    @RequestMapping("register")
+    private String register(Student student) {
+        if (studentService.register(student, request.getRemoteAddr())) {
+            return "redirect:/student/index.jsp";
+        }
+        request.setAttribute("message", "邮件地址已经存在");
+        return "/student/register.jsp";
     }
 
     @RequestMapping("list")
@@ -42,5 +49,11 @@ public class StudentController extends BaseController {
     private String remove(@PathVariable("id") Integer id) {
         studentService.remove(id);
         return "redirect:/student/list";
+    }
+
+    @RequestMapping("queryAllClasses")
+    private String queryAllClasses() {
+        session.setAttribute("classes", classService.list());
+        return "redirect:/student/register.jsp";
     }
 }

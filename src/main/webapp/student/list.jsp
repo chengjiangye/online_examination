@@ -10,7 +10,7 @@
     <body>
         <h1>Student List</h1>
         <hr/>
-        <c:import url="${ctx}/student/create.jsp"/>
+        <c:import url="${ctx}/student/register.jsp"/>
         <hr/>
         <table border="1">
             <tr>
