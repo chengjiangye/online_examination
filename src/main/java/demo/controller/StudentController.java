@@ -56,4 +56,15 @@ public class StudentController extends BaseController {
         session.setAttribute("classes", classService.list());
         return "redirect:/student/register.jsp";
     }
+
+    @RequestMapping("login")
+    private String login(Student student) {
+        student = studentService.login(student);
+        if (student != null) {
+            session.setAttribute("student", student);
+            return "redirect:/student/student.jsp";
+        }
+        request.setAttribute("message", "邮箱或密码错误");
+        return "/student/index.jsp";
+    }
 }

@@ -118,3 +118,5 @@ FROM db_examination.class;
 
 SELECT *
 FROM db_examination.student;
+
+TRUNCATE TABLE db_examination.student;

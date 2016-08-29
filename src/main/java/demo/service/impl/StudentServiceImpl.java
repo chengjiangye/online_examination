@@ -32,4 +32,18 @@ public class StudentServiceImpl extends GenericServiceImpl<Student, Integer> imp
         }
         return false;
     }
+
+    @Override
+    public Student login(Student student) {
+        String plainPassword = student.getPassword();
+        student = genericDao.query("student.queryStudentByEmail", student.getEmail().trim());
+        if (student != null) {
+            String encryptedPassword = student.getPassword();
+            StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+            if (encryptor.checkPassword(plainPassword, encryptedPassword)) {
+                return student;
+            }
+        }
+        return null;
+    }
 }
