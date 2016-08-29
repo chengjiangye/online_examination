@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="student">
+    <select id="list" resultType="student">
+        SELECT *
+        FROM db_examination.student
+        ORDER BY id
+    </select>
+    <select id="queryById" resultType="student">
+        SELECT *
+        FROM db_examination.student
+        WHERE id = #{id}
+    </select>
+    <update id="modify">
+        UPDATE db_examination.student
+        SET
+            email = #{email}, 
+            username = #{username}, 
+            password = #{password}, 
+            gender = #{gender}, 
+            dob = #{dob}, 
+            phone = #{phone}, 
+            education = #{education}, 
+            major = #{major}, 
+            academy = #{academy}, 
+            graduation = #{graduation}, 
+            training = #{training}, 
+            experience = #{experience}, 
+            photo = #{photo}, 
+            remark = #{remark}, 
+            card = #{card}, 
+            lastIp = #{lastIp}, 
+            lastLogin = #{lastLogin}, 
+            classId = #{classId}
+        WHERE id = #{id}
+    </update>
+    <delete id="remove">
+        DELETE FROM db_examination.student
+        WHERE id = #{id}
+    </delete>
+    <insert id="create" parameterType="student" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO db_examination.student (
+            email,
+            username,
+            password,
+            gender,
+            dob,
+            phone,
+            education,
+            major,
+            academy,
+            graduation,
+            training,
+            experience,
+            photo,
+            remark,
+            card,
+            lastIp,
+            lastLogin,
+            classId
+        )
+        VALUES (
+            #{email}, 
+            #{username}, 
+            #{password}, 
+            #{gender}, 
+            #{dob}, 
+            #{phone}, 
+            #{education}, 
+            #{major}, 
+            #{academy}, 
+            #{graduation}, 
+            #{training}, 
+            #{experience}, 
+            #{photo}, 
+            #{remark}, 
+            #{card}, 
+            #{lastIp}, 
+            #{lastLogin}, 
+            #{classId}
+        );
+    </insert>
+    <select id="queryStudentByEmail" parameterType="java.lang.String" resultType="student">
+        SELECT *
+        FROM db_examination.student
+        WHERE email = #{email}
+    </select>
+</mapper>
