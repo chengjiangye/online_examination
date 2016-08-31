@@ -29,16 +29,11 @@ public class StudentServiceImpl extends GenericServiceImpl<Student, Integer> imp
     public String register(Student student, HttpServletRequest request, MultipartFile photoFile) {
         String photoName;
         if (photoFile.isEmpty()) {
-            if (student.getGender().equals("男")) {
-                photoName = "male_default.png";
-            } else {
-                photoName = "female_default.png";
-            }
+            photoName = student.getGender().equals("男") ? "male_default.png" : "female_default.png";
         } else {
             if (!Arrays.asList(MIME_ARRAY).contains(photoFile.getContentType())) {
                 return "照片类型错误";
             }
-            System.out.println(photoFile.getSize());
             if (photoFile.getSize() > MAX_PHOTO_SIZE_BYTES) {
                 return "照片超过了1M";
             }
@@ -53,16 +48,16 @@ public class StudentServiceImpl extends GenericServiceImpl<Student, Integer> imp
             }
         }
         student.setPhoto(photoName);
-        if (genericDao.query("student.queryStudentByEmail", student.getEmail().trim()) == null) {
-            StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
-            student.setPassword(encryptor.encryptPassword(student.getPassword()));
-            student.setLastIp(request.getRemoteAddr());
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            student.setLastLogin(simpleDateFormat.format(new Date()));
-            genericDao.create(student);
-            return null;
+        if (genericDao.query("student.queryStudentByEmail", student.getEmail().trim()) != null) {
+            return "邮件地址已经存在";
         }
-        return "邮件地址已经存在";
+        StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+        student.setPassword(encryptor.encryptPassword(student.getPassword()));
+        student.setLastIp(request.getRemoteAddr());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        student.setLastLogin(simpleDateFormat.format(new Date()));
+        genericDao.create(student);
+        return null;
     }
 
     @Override
