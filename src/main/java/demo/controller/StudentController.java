@@ -18,8 +18,6 @@ import java.io.IOException;
 @RequestMapping("student")
 public class StudentController extends BaseController {
 
-    public static final String PHOTO_PATH = "/static/photo";
-
     @Autowired
     private StudentService studentService;
 
@@ -27,31 +25,12 @@ public class StudentController extends BaseController {
     private ClassService classService;
 
     @RequestMapping("register")
-    private String register(Student student, @RequestParam MultipartFile photoFile) throws IOException {
-
-        String photoName;
-
-        if (photoFile.isEmpty()) {
-            if (student.getGender().equals("男")) {
-                photoName = "male_default.png";
-            } else {
-                photoName = "female_default.png";
-            }
-        } else {
-
-            String photoPath = application.getRealPath(PHOTO_PATH);
-            photoName = String.valueOf(System.currentTimeMillis())
-                    .concat(".")
-                    .concat(StringUtils.getFilenameExtension(photoFile.getOriginalFilename()));
-            photoFile.transferTo(new File(photoPath, photoName));
-        }
-
-        student.setPhoto(photoName);
-
-        if (studentService.register(student, request.getRemoteAddr())) {
+    private String register(Student student, @RequestParam MultipartFile photoFile) {
+        String message = studentService.register(student, request, photoFile);
+        if (message == null) {
             return "redirect:/student/index.jsp";
         }
-        request.setAttribute("message", "邮件地址已经存在");
+        request.setAttribute("message", message);
         return "/student/register.jsp";
     }
 

@@ -7,7 +7,12 @@ import org.springframework.stereotype.Service;
 import demo.dao.GenericDao;
 import demo.model.Student;
 import demo.service.StudentService;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -20,17 +25,40 @@ public class StudentServiceImpl extends GenericServiceImpl<Student, Integer> imp
     }
 
     @Override
-    public boolean register(Student student, String lastIp) {
+    public String register(Student student, HttpServletRequest request, MultipartFile photoFile) {
+        String photoName;
+
+        if (photoFile.isEmpty()) {
+            if (student.getGender().equals("男")) {
+                photoName = "male_default.png";
+            } else {
+                photoName = "female_default.png";
+            }
+        } else {
+
+            String photoPath = request.getServletContext().getRealPath(PHOTO_PATH);
+            photoName = String.valueOf(System.currentTimeMillis())
+                    .concat(".")
+                    .concat(StringUtils.getFilenameExtension(photoFile.getOriginalFilename()));
+            try {
+                photoFile.transferTo(new File(photoPath, photoName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        student.setPhoto(photoName);
+
         if (genericDao.query("student.queryStudentByEmail", student.getEmail().trim()) == null) {
             StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
             student.setPassword(encryptor.encryptPassword(student.getPassword()));
-            student.setLastIp(lastIp);
+            student.setLastIp(request.getRemoteAddr());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             student.setLastLogin(simpleDateFormat.format(new Date()));
             genericDao.create(student);
-            return true;
+            return null;
         }
-        return false;
+        return "邮件地址已经存在";
     }
 
     @Override
