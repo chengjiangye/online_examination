@@ -14,4 +14,9 @@ public class ClassServiceImpl extends GenericServiceImpl<Class, Integer> impleme
     public ClassServiceImpl(GenericDao<Class, Integer> genericDao) {
         super(genericDao);
     }
+
+    @Override
+    public Class queryStudentsByClassId(int id) {
+        return genericDao.query("class.queryStudentsByClassId", id);
+    }
 }

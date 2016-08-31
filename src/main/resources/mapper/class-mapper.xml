@@ -28,8 +28,8 @@
     </delete>
     <insert id="create" parameterType="class" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO db_examination.class (
-            title, 
-            start, 
+            title,
+            start,
             finish
         )
         VALUES (
@@ -38,4 +38,25 @@
             #{finish}
         );
     </insert>
+
+    <resultMap id="map_queryStudentsByClassId" type="class">
+        <result property="title" column="title"/>
+        <result property="start" column="start"/>
+        <result property="finish" column="finish"/>
+        <collection property="students" ofType="student">
+            <result property="username" column="username"/>
+            <result property="photo" column="photo"/>
+        </collection>
+    </resultMap>
+    <select id="queryStudentsByClassId" parameterType="int" resultMap="map_queryStudentsByClassId">
+        SELECT
+            c.title,
+            c.start,
+            c.finish,
+            s.username,
+            s.photo
+        FROM db_examination.class c INNER JOIN db_examination.student s
+                ON c.id = s.classId
+        WHERE c.id = #{id}
+    </select>
 </mapper>

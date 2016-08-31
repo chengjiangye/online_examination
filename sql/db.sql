@@ -119,3 +119,9 @@ SELECT *
 FROM db_examination.student;
 
 TRUNCATE TABLE db_examination.student;
+
+# id = 1
+SELECT c.title, s.username
+FROM db_examination.class c INNER JOIN db_examination.student s
+    ON c.id = s.classId
+WHERE c.id = 1;

@@ -26,4 +26,6 @@ public class Student extends BaseModel {
     private String lastIp;
     private String lastLogin;
     private int classId;
+
+    private Class clazz;
 }

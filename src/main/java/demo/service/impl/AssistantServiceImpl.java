@@ -1,5 +1,6 @@
 package demo.service.impl;
 
+import demo.model.Class;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

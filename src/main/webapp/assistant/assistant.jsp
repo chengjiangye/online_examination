@@ -39,7 +39,7 @@
     <c:forEach var="clazz" items="${sessionScope.list}" varStatus="vs">
         <tr>
             <td>${vs.count}</td>
-            <td>${clazz.title}</td>
+            <td><a href="${ctx}/assistant/queryStudentsByClassId/${clazz.id}">${clazz.title}</a></td>
             <td>${clazz.start}</td>
             <td>${clazz.finish}</td>
             <td><a href="${ctx}/class/queryById/${clazz.id}">修改</a></td>
