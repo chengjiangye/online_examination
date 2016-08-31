@@ -82,8 +82,7 @@ CREATE TABLE db_examination.student (
   graduation DATE COMMENT '毕业日期',
   training   VARCHAR(1024) COMMENT '培训经历',
   experience VARCHAR(1024) COMMENT '工作经验',
-  photo      VARCHAR(255) NOT NULL
-  COMMENT '照片',
+  photo      VARCHAR(255) COMMENT '照片',
   remark     VARCHAR(1024) COMMENT '备注',
   card       VARCHAR(255) COMMENT '上机卡号',
   lastIp     VARCHAR(255) NOT NULL

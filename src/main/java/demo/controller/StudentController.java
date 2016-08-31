@@ -5,6 +5,7 @@ import demo.service.ClassService;
 import demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,10 +29,24 @@ public class StudentController extends BaseController {
     @RequestMapping("register")
     private String register(Student student, @RequestParam MultipartFile photoFile) throws IOException {
 
-        String photoPath = application.getRealPath(PHOTO_PATH);
-        photoFile.transferTo(new File(photoPath, photoFile.getOriginalFilename()));
+        String photoName;
 
-        student.setPhoto(photoFile.getOriginalFilename());
+        if (photoFile.isEmpty()) {
+            if (student.getGender().equals("男")) {
+                photoName = "male_default.png";
+            } else {
+                photoName = "female_default.png";
+            }
+        } else {
+
+            String photoPath = application.getRealPath(PHOTO_PATH);
+            photoName = String.valueOf(System.currentTimeMillis())
+                    .concat(".")
+                    .concat(StringUtils.getFilenameExtension(photoFile.getOriginalFilename()));
+            photoFile.transferTo(new File(photoPath, photoName));
+        }
+
+        student.setPhoto(photoName);
 
         if (studentService.register(student, request.getRemoteAddr())) {
             return "redirect:/student/index.jsp";
