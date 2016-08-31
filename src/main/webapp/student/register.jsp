@@ -29,7 +29,7 @@
     毕业日期 <input name="graduation" placeholder="GRADUATION" value="2012-7-1"><br>
     <textarea name="training" placeholder="TRAINING">无</textarea><br>
     <textarea name="experience" placeholder="EXPERIENCE">无</textarea><br>
-    上传照片 <input type="file" name="photoFile" placeholder="PHOTO"><br>
+    上传照片 <input type="file" name="photoFile" placeholder="PHOTO">（不能超过1M，jpg,png格式）<br>
     <textarea name="remark" placeholder="REMARK">备注信息</textarea><br>
     <input name="card" placeholder="CARD" value="20160001"><br>
     <input type="submit" value="注册">

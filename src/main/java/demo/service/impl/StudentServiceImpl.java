@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 @Service
@@ -27,7 +28,6 @@ public class StudentServiceImpl extends GenericServiceImpl<Student, Integer> imp
     @Override
     public String register(Student student, HttpServletRequest request, MultipartFile photoFile) {
         String photoName;
-
         if (photoFile.isEmpty()) {
             if (student.getGender().equals("男")) {
                 photoName = "male_default.png";
@@ -35,7 +35,13 @@ public class StudentServiceImpl extends GenericServiceImpl<Student, Integer> imp
                 photoName = "female_default.png";
             }
         } else {
-
+            if (!Arrays.asList(MIME_ARRAY).contains(photoFile.getContentType())) {
+                return "照片类型错误";
+            }
+            System.out.println(photoFile.getSize());
+            if (photoFile.getSize() > MAX_PHOTO_SIZE_BYTES) {
+                return "照片超过了1M";
+            }
             String photoPath = request.getServletContext().getRealPath(PHOTO_PATH);
             photoName = String.valueOf(System.currentTimeMillis())
                     .concat(".")
@@ -46,9 +52,7 @@ public class StudentServiceImpl extends GenericServiceImpl<Student, Integer> imp
                 e.printStackTrace();
             }
         }
-
         student.setPhoto(photoName);
-
         if (genericDao.query("student.queryStudentByEmail", student.getEmail().trim()) == null) {
             StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
             student.setPassword(encryptor.encryptPassword(student.getPassword()));
