@@ -46,6 +46,22 @@
         <collection property="students" ofType="student">
             <result property="username" column="username"/>
             <result property="photo" column="photo"/>
+            <result property="email" column="email"/>
+            <result property="username" column="username"/>
+            <result property="gender" column="gender"/>
+            <result property="dob" column="dob"/>
+            <result property="phone" column="phone"/>
+            <result property="education" column="education"/>
+            <result property="major" column="major"/>
+            <result property="academy" column="academy"/>
+            <result property="graduation" column="graduation"/>
+            <result property="training" column="training"/>
+            <result property="experience" column="experience"/>
+            <result property="photo" column="photo"/>
+            <result property="remark" column="remark"/>
+            <result property="card" column="card"/>
+            <result property="lastIp" column="lastIp"/>
+            <result property="lastLogin" column="lastLogin"/>
         </collection>
     </resultMap>
     <select id="queryStudentsByClassId" parameterType="int" resultMap="map_queryStudentsByClassId">
@@ -54,7 +70,23 @@
             c.start,
             c.finish,
             s.username,
-            s.photo
+            s.photo,
+            s.email,
+            s.username,
+            s.gender,
+            s.dob,
+            s.phone,
+            s.education,
+            s.major,
+            s.academy,
+            s.graduation,
+            s.training,
+            s.experience,
+            s.photo,
+            s.remark,
+            s.card,
+            s.lastIp,
+            s.lastLogin
         FROM db_examination.class c INNER JOIN db_examination.student s
                 ON c.id = s.classId
         WHERE c.id = #{id}
