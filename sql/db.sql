@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS db_examination.admin;
 CREATE TABLE db_examination.admin (
   id       INT UNSIGNED AUTO_INCREMENT PRIMARY KEY
   COMMENT 'PK',
-  email    VARCHAR(255) NOT NULL UNIQUE
+  email    VARCHAR(191) NOT NULL UNIQUE
   COMMENT '邮箱',
   username VARCHAR(255) NOT NULL
   COMMENT '姓名',
@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS db_examination.teacher;
 CREATE TABLE db_examination.teacher (
   id       INT UNSIGNED AUTO_INCREMENT PRIMARY KEY
   COMMENT 'PK',
-  email    VARCHAR(255) NOT NULL UNIQUE
+  email    VARCHAR(191) NOT NULL UNIQUE
   COMMENT '邮箱',
   username VARCHAR(255) NOT NULL
   COMMENT '姓名',
@@ -37,7 +37,7 @@ DROP TABLE IF EXISTS db_examination.assistant;
 CREATE TABLE db_examination.assistant (
   id       INT UNSIGNED AUTO_INCREMENT PRIMARY KEY
   COMMENT 'PK',
-  email    VARCHAR(255) NOT NULL UNIQUE
+  email    VARCHAR(191) NOT NULL UNIQUE
   COMMENT '邮箱',
   username VARCHAR(255) NOT NULL
   COMMENT '姓名',
