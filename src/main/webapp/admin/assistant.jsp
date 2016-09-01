@@ -19,7 +19,7 @@
 <body>
 <h1>维护教务信息</h1>
 <form action="${ctx}/admin/createAssistant" method="post">
-    <input name="email" placeholder="邮箱" value="@tsinghua.edu.cn"><br>
+    <input name="email" placeholder="邮箱" value="assistant@tsinghua.edu.cn"><br>
     <input name="username" placeholder="用户名" value="教务"><br>
     <input type="password" name="password" placeholder="密码" value="123"><br>
     <input type="password" name="repassword" placeholder="重复密码" value="123"><br>
