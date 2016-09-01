@@ -30,18 +30,18 @@ public class PaperController extends BaseController {
     @RequestMapping("queryById/{id}")
     private String search(@PathVariable("id") Integer id) {
         session.setAttribute("paper", paperService.queryById(id));
-        return "redirect:/paper/edit.jsp";
+        return "redirect:/teacher/editPaper.jsp";
     }
 
     @RequestMapping("modify")
     private String modify(Paper paper) {
         paperService.modify(paper);
-        return "redirect:list";
+        return "redirect:/teacher/queryPapersByTeacherId";
     }
 
     @RequestMapping("remove/{id}")
     private String remove(@PathVariable("id") Integer id) {
         paperService.remove(id);
-        return "redirect:/paper/list";
+        return "redirect:/teacher/queryPapersByTeacherId";
     }
 }
