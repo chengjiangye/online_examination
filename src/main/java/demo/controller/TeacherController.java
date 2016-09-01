@@ -29,7 +29,7 @@ public class TeacherController extends BaseController {
         if (teacher != null) {
             session.setAttribute("teacher", teacher);
             session.setAttribute("courses", courseService.list());
-            return "redirect:/teacher/teacher.jsp";
+            return "redirect:/teacher/queryPapersByTeacherId";
         }
         request.setAttribute("message", "邮箱或密码错误");
         return "/teacher/index.jsp";
@@ -40,6 +40,13 @@ public class TeacherController extends BaseController {
         Teacher teacher = (Teacher) session.getAttribute("teacher");
         paper.setTeacherId(teacher.getId());
         paperService.create(paper);
-        return "redirect:/paper/list";
+        return "redirect:/teacher/queryPapersByTeacherId";
+    }
+
+    @RequestMapping("queryPapersByTeacherId")
+    private String queryPapersByTeacherId() {
+        Teacher teacher = (Teacher) session.getAttribute("teacher");
+        session.setAttribute("papers", paperService.queryList("paper.queryPapersByTeacherId", teacher.getId()));
+        return "redirect:/teacher/teacher.jsp";
     }
 }

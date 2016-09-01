@@ -12,4 +12,7 @@ public class Paper extends BaseModel {
     private int score;
     private int teacherId;
     private int courseId;
+
+    private Teacher teacher;
+    private Course course;
 }

@@ -29,9 +29,9 @@
     </delete>
     <insert id="create" parameterType="paper" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO db_examination.paper (
-            time, 
-            score, 
-            teacherId, 
+            time,
+            score,
+            teacherId,
             courseId
         )
         VALUES (
@@ -41,4 +41,28 @@
             #{courseId}
         );
     </insert>
+
+    <resultMap id="map_queryPapersByTeacherId" type="paper">
+        <id property="id" column="id"/>
+        <result property="time" column="time"/>
+        <result property="score" column="score"/>
+        <association property="teacher" javaType="teacher">
+            <result property="username" column="username"/>
+        </association>
+        <association property="course" javaType="course">
+            <result property="title" column="title"/>
+        </association>
+    </resultMap>
+    <select id="queryPapersByTeacherId" parameterType="int" resultMap="map_queryPapersByTeacherId">
+        SELECT
+            p.id,
+            p.time,
+            p.score,
+            t.username,
+            c.title
+        FROM db_examination.paper p INNER JOIN db_examination.teacher t
+            INNER JOIN db_examination.course c
+                ON p.teacherId = t.id AND p.courseId = c.id
+        WHERE t.id = #{id}
+    </select>
 </mapper>

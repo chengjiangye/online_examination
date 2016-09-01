@@ -190,3 +190,35 @@ VALUES (
   1,
   1
 );
+
+SELECT
+  p.time,
+  p.score,
+  t.username,
+  c.title
+FROM db_examination.paper p INNER JOIN db_examination.teacher t
+  INNER JOIN db_examination.course c
+    ON p.teacherId = t.id AND p.courseId = c.id
+WHERE t.id = 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
