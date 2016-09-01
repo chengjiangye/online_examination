@@ -32,8 +32,7 @@ public class AssistantController extends BaseController {
 
     @RequestMapping("queryStudentsByClassId/{id}")
     private String queryStudentsByClassId(@PathVariable int id) {
-        System.out.println(id);
-        session.setAttribute("clazz", classService.queryStudentsByClassId(id));
+        session.setAttribute("clazz", classService.query("class.queryStudentsByClassId", id));
         return "redirect:/assistant/students.jsp";
     }
 }

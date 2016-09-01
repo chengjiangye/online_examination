@@ -40,10 +40,12 @@
     </insert>
 
     <resultMap id="map_queryStudentsByClassId" type="class">
+        <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="start" column="start"/>
         <result property="finish" column="finish"/>
         <collection property="students" ofType="student">
+            <id property="id" column="studentId"/>
             <result property="username" column="username"/>
             <result property="photo" column="photo"/>
             <result property="email" column="email"/>
@@ -66,9 +68,11 @@
     </resultMap>
     <select id="queryStudentsByClassId" parameterType="int" resultMap="map_queryStudentsByClassId">
         SELECT
+            c.id,
             c.title,
             c.start,
             c.finish,
+            s.id AS studentId,
             s.username,
             s.photo,
             s.email,

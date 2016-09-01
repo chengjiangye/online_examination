@@ -14,7 +14,7 @@
 <body>
 <h1>学生信息</h1>
 <hr/>
-<h3>${sessionScope.clazz.title}</h3>
+<h3>${sessionScope.clazz.id} - ${sessionScope.clazz.title}</h3>
 <small>${sessionScope.clazz.start}</small> - <small>${sessionScope.clazz.finish}</small>
 <table border="1">
     <tr>
@@ -59,7 +59,7 @@
             <td>${student.lastIp}</td>
             <td>${student.lastLogin}</td>
             <td><a href="">修改</a></td>
-            <td><a href="">删除</a></td>
+            <td><a href="${ctx}/assistant/removeStudent/${student.id}">删除</a></td>
         </tr>
     </c:forEach>
 </table>

@@ -93,6 +93,38 @@ CREATE TABLE db_examination.student (
 )
   COMMENT '学生表';
 
+-- table course
+DROP TABLE IF EXISTS db_examination.course;
+CREATE TABLE db_examination.course (
+  id    INT UNSIGNED AUTO_INCREMENT PRIMARY KEY
+  COMMENT 'PK',
+  title VARCHAR(255) NOT NULL
+  COMMENT '课程名称'
+)
+  COMMENT '课程表';
+
+INSERT INTO db_examination.course VALUE (NULL, '网页设计基础');
+INSERT INTO db_examination.course VALUE (NULL, 'Java SE 程序设计');
+INSERT INTO db_examination.course VALUE (NULL, '数据库基础');
+INSERT INTO db_examination.course VALUE (NULL, 'Java EE 程序设计');
+INSERT INTO db_examination.course VALUE (NULL, 'Java EE 框架技术');
+INSERT INTO db_examination.course VALUE (NULL, 'Android 应用开发');
+INSERT INTO db_examination.course VALUE (NULL, '证书考试');
+
+-- table paper
+DROP TABLE IF EXISTS db_examination.paper;
+CREATE TABLE db_examination.paper (
+  id        INT UNSIGNED AUTO_INCREMENT PRIMARY KEY
+  COMMENT 'PK',
+  time      INT NOT NULL
+  COMMENT '考试时间，分钟',
+  score     INT NOT NULL
+  COMMENT '总分',
+  courseId  INT UNSIGNED COMMENT 'FK',
+  teacherId INT UNSIGNED COMMENT 'FK'
+)
+  COMMENT '试卷表';
+
 -- FOREIGN KEY ----------------------------------------------------------
 
 ALTER TABLE db_examination.student
@@ -100,6 +132,18 @@ ADD CONSTRAINT
   fk_student_classId
 FOREIGN KEY (classId)
 REFERENCES db_examination.class (id);
+
+ALTER TABLE db_examination.paper
+ADD CONSTRAINT
+  fk_paper_courseId
+FOREIGN KEY (courseId)
+REFERENCES db_examination.course (id);
+
+ALTER TABLE db_examination.paper
+ADD CONSTRAINT
+  fk_paper_teacherId
+FOREIGN KEY (teacherId)
+REFERENCES db_examination.teacher (id);
 
 -- SELECT ---------------------------------------------------------------
 
@@ -118,10 +162,31 @@ FROM db_examination.class;
 SELECT *
 FROM db_examination.student;
 
+SELECT *
+FROM db_examination.course;
+
+SELECT *
+FROM db_examination.paper;
+
 TRUNCATE TABLE db_examination.student;
 
 # id = 1
-SELECT c.title, s.username
+SELECT
+  c.title,
+  s.username
 FROM db_examination.class c INNER JOIN db_examination.student s
     ON c.id = s.classId
 WHERE c.id = 1;
+
+INSERT INTO db_examination.paper (
+  time,
+  score,
+  teacherId,
+  courseId
+)
+VALUES (
+  1,
+  1,
+  1,
+  1
+);

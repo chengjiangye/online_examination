@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="paper">
+    <select id="list" resultType="paper">
+        SELECT *
+        FROM db_examination.paper
+        ORDER BY id
+    </select>
+    <select id="queryById" resultType="paper">
+        SELECT *
+        FROM db_examination.paper
+        WHERE id = #{id}
+    </select>
+    <update id="modify">
+        UPDATE db_examination.paper
+        SET
+            time = #{time}, 
+            score = #{score}, 
+            teacherId = #{teacherId}, 
+            courseId = #{courseId}
+        WHERE id = #{id}
+    </update>
+    <delete id="remove">
+        DELETE FROM db_examination.paper
+        WHERE id = #{id}
+    </delete>
+    <insert id="create" parameterType="paper" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO db_examination.paper (
+            time, 
+            score, 
+            teacherId, 
+            courseId
+        )
+        VALUES (
+            #{time}, 
+            #{score}, 
+            #{teacherId}, 
+            #{courseId}
+        );
+    </insert>
+</mapper>
