@@ -49,4 +49,10 @@ public class TeacherController extends BaseController {
         session.setAttribute("papers", paperService.queryList("paper.queryPapersByTeacherId", teacher.getId()));
         return "redirect:/teacher/teacher.jsp";
     }
+
+    @RequestMapping("queryPaperByPaperId/{id}")
+    private String queryPaperByPaperId(@PathVariable int id) {
+        session.setAttribute("paper", paperService.query("paper.queryPaperByPaperId", id));
+        return "redirect:/teacher/paper.jsp";
+    }
 }

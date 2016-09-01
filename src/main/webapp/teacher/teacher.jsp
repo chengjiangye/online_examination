@@ -46,7 +46,7 @@
             <td>${vs.count}</td>
             <td>${paper.time}</td>
             <td>${paper.score}</td>
-            <td><a href="">${paper.course.title} 试卷${paper.id}</a></td>
+            <td><a href="${ctx}/teacher/queryPaperByPaperId/${paper.id}">${paper.course.title} 试卷${paper.id}</a></td>
             <td><a href="${ctx}/paper/queryById/${paper.id}">MODIFY</a></td>
             <td><a class="delete" href="${ctx }/paper/remove/${paper.id}" onclick="return del()">REMOVE</a></td>
         </tr>

@@ -125,6 +125,24 @@ CREATE TABLE db_examination.paper (
 )
   COMMENT '试卷表';
 
+-- table test
+DROP TABLE IF EXISTS db_examination.test;
+CREATE TABLE db_examination.test (
+  id       INT UNSIGNED AUTO_INCREMENT PRIMARY KEY
+  COMMENT 'PK',
+  type     VARCHAR(255)  NOT NULL
+  COMMENT '类型：选择题，填空题，简答题，编程题',
+  question VARCHAR(2048) NOT NULL
+  COMMENT '题目',
+  optionA  VARCHAR(255) COMMENT '选项A',
+  optionB  VARCHAR(255) COMMENT '选项B',
+  optionC  VARCHAR(255) COMMENT '选项C',
+  optionD  VARCHAR(255) COMMENT '选项D',
+  answer   TEXT COMMENT '答案',
+  paperId  INT UNSIGNED COMMENT 'FK'
+)
+  COMMENT '试题表';
+
 -- FOREIGN KEY ----------------------------------------------------------
 
 ALTER TABLE db_examination.student
@@ -144,6 +162,12 @@ ADD CONSTRAINT
   fk_paper_teacherId
 FOREIGN KEY (teacherId)
 REFERENCES db_examination.teacher (id);
+
+ALTER TABLE db_examination.test
+ADD CONSTRAINT
+  fk_test_paperId
+FOREIGN KEY (paperId)
+REFERENCES db_examination.paper (id);
 
 -- SELECT ---------------------------------------------------------------
 
@@ -201,6 +225,23 @@ FROM db_examination.paper p INNER JOIN db_examination.teacher t
     ON p.teacherId = t.id AND p.courseId = c.id
 WHERE t.id = 1;
 
+
+SELECT
+  p.time,
+  p.score,
+  c.title,
+  t.type,
+  t.question,
+  t.optionA,
+  t.optionB,
+  t.optionC,
+  t.optionD,
+  t.answer
+FROM db_examination.paper p INNER JOIN db_examination.course c
+    ON p.courseId = c.id
+  LEFT OUTER JOIN db_examination.test t
+    ON p.id = t.paperId
+WHERE p.id = 4;
 
 
 

@@ -65,4 +65,43 @@
                 ON p.teacherId = t.id AND p.courseId = c.id
         WHERE t.id = #{id}
     </select>
+
+    <resultMap id="map_queryPaperByPaperId" type="paper">
+        <id property="id" column="id"/>
+        <result property="time" column="time"/>
+        <result property="score" column="score"/>
+        <association property="course" javaType="course">
+            <result property="title" column="title"/>
+        </association>
+        <collection property="tests" ofType="test">
+            <id property="id" column="testId"/>
+            <result property="type" column="type"/>
+            <result property="question" column="question"/>
+            <result property="optionA" column="optionA"/>
+            <result property="optionB" column="optionB"/>
+            <result property="optionC" column="optionC"/>
+            <result property="optionD" column="optionD"/>
+            <result property="answer" column="answer"/>
+        </collection>
+    </resultMap>
+    <select id="queryPaperByPaperId" parameterType="int" resultMap="map_queryPaperByPaperId">
+        SELECT
+            p.id,
+            p.time,
+            p.score,
+            c.title,
+            t.id AS testId,
+            t.type,
+            t.question,
+            t.optionA,
+            t.optionB,
+            t.optionC,
+            t.optionD,
+            t.answer
+        FROM db_examination.paper p INNER JOIN db_examination.course c
+                ON p.courseId = c.id
+            LEFT OUTER JOIN db_examination.test t
+                ON p.id = t.paperId
+        WHERE p.id = #{id}
+    </select>
 </mapper>
