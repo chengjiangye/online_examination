@@ -42,6 +42,9 @@
                     $(this).text('取消预览');
                 }
             });
+
+            var question = $('.space').text();
+
         });
     </script>
 </head>
@@ -106,13 +109,34 @@
 <hr>
 <button>预览试卷</button>
 <div id="preview">
-    <c:forEach var="test" items="${sessionScope.paper.tests}" varStatus="vs">
+    <h2>一、选择题</h2>
+    <c:forEach var="test" items="${sessionScope.paper.tests}" varStatus="vs1">
         <c:if test="${test.type == '选择题'}">
-            ${vs.count}. ${test.question}<br>
+            ${vs1.count}. ${test.question}<br>
             <input type="radio" name="${test.id}">A. ${test.optionA}<br>
             <input type="radio" name="${test.id}">B. ${test.optionB}<br>
             <input type="radio" name="${test.id}">C. ${test.optionC}<br>
             <input type="radio" name="${test.id}">D. ${test.optionD}<br>
+        </c:if>
+    </c:forEach>
+    <h2>二、填空题</h2>
+    <c:forEach var="test" items="${sessionScope.paper.tests}" varStatus="vs2">
+        <c:if test="${test.type == '填空题'}">
+            <div class="space" id="${test.id}">${vs2.count}. ${test.question}</div>
+        </c:if>
+    </c:forEach>
+    <h2>三、简答题</h2>
+    <c:forEach var="test" items="${sessionScope.paper.tests}" varStatus="vs3">
+        <c:if test="${test.type == '简答题'}">
+            ${vs3.count}. ${test.question}<br>
+            <textarea name="${test.id}"></textarea><br>
+        </c:if>
+    </c:forEach>
+    <h2>三、编程题</h2>
+    <c:forEach var="test" items="${sessionScope.paper.tests}" varStatus="vs3">
+        <c:if test="${test.type == '编程题'}">
+            ${vs3.count}. ${test.question}<br>
+            <input type="file" name="${test.id}"><br>
         </c:if>
     </c:forEach>
 </div>
