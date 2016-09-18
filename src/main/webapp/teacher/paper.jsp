@@ -10,10 +10,27 @@
 <html>
 <head>
     <title>试卷 - 教师</title>
+    <script src="${ctx}/static/js/jquery-3.1.0.min.js"></script>
     <script>
         function del() {
             return confirm('REMOVE?');
         }
+        $(function () {
+            $('#type').change(function () {
+                var selectedType = $(this).val();
+                console.log(selectedType);
+                if (selectedType != '选择题') {
+                    $('#options').hide();
+                } else {
+                    $('#options').show();
+                }
+                if (selectedType == '编程题') {
+                    $('#answer').hide();
+                } else {
+                    $('#answer').show();
+                }
+            });
+        });
     </script>
 </head>
 <body>
@@ -28,18 +45,22 @@
 <form action="${ctx}/test/create" method="post">
     <input type="hidden" name="paperId" value="${sessionScope.paper.id}">
     题型
-    <select name="type">
+    <select id="type" name="type">
         <option value="选择题">选择题</option>
         <option value="填空题">填空题</option>
         <option value="简答题">简答题</option>
         <option value="编程题">编程题</option>
     </select><br>
-    <textarea name="question" placeholder="题目"></textarea><br>
-    <input name="optionA" placeholder="选项 A"><br>
-    <input name="optionB" placeholder="选项 B"><br>
-    <input name="optionC" placeholder="选项 C"><br>
-    <input name="optionD" placeholder="选项 D"><br>
-    <textarea name="answer" placeholder="参考答案"></textarea><br>
+    <textarea name="question" placeholder="题目"></textarea>
+    <small>填空题的空白用 ### 表示</small>
+    <br>
+    <div id="options">
+        <input name="optionA" placeholder="选项 A"><br>
+        <input name="optionB" placeholder="选项 B"><br>
+        <input name="optionC" placeholder="选项 C"><br>
+        <input name="optionD" placeholder="选项 D"><br>
+    </div>
+    <textarea id="answer" name="answer" placeholder="参考答案"></textarea><br>
     <input type="submit" value="创建">
 </form>
 <hr>
