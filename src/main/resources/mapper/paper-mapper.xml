@@ -82,6 +82,7 @@
             <result property="optionC" column="optionC"/>
             <result property="optionD" column="optionD"/>
             <result property="answer" column="answer"/>
+            <result property="score" column="testScore"/>
         </collection>
     </resultMap>
     <select id="queryPaperByPaperId" parameterType="int" resultMap="map_queryPaperByPaperId">
@@ -97,7 +98,8 @@
             t.optionB,
             t.optionC,
             t.optionD,
-            t.answer
+            t.answer,
+            t.score as testScore
         FROM db_examination.paper p INNER JOIN db_examination.course c
                 ON p.courseId = c.id
             LEFT OUTER JOIN db_examination.test t

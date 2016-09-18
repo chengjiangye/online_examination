@@ -23,7 +23,8 @@
             optionB = #{optionB}, 
             optionC = #{optionC}, 
             optionD = #{optionD}, 
-            answer = #{answer}, 
+            answer = #{answer},
+            score = #{score},
             paperId = #{paperId}
         WHERE id = #{id}
     </update>
@@ -39,7 +40,8 @@
             optionB, 
             optionC, 
             optionD, 
-            answer, 
+            answer,
+            score,
             paperId
         )
         VALUES (
@@ -50,6 +52,7 @@
             #{optionC}, 
             #{optionD}, 
             #{answer}, 
+            #{score},
             #{paperId}
         );
     </insert>

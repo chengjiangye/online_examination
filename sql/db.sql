@@ -145,6 +145,9 @@ CREATE TABLE db_examination.test (
 )
   COMMENT '试题表';
 
+# ALTER TABLE db_examination.test
+#     ADD COLUMN score int not NULL ;
+
 -- FOREIGN KEY ----------------------------------------------------------
 
 ALTER TABLE db_examination.student

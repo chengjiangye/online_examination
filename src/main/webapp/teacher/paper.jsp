@@ -43,8 +43,19 @@
                 }
             });
 
-            var question = $('.space').text();
-
+            $.each($('.x'), function (index) {
+                $(this).prepend(index + 1 + '. ');
+            });
+            $.each($('.t'), function (index) {
+                $(this).html($(this).text().replace('###', '<input name="' + $(this).attr('title') + '">'));
+                $(this).prepend(index + 1 + '. ');
+            });
+            $.each($('.j'), function (index) {
+                $(this).prepend(index + 1 + '. ');
+            });
+            $.each($('.b'), function (index) {
+                $(this).prepend(index + 1 + '. ');
+            });
         });
     </script>
 </head>
@@ -76,21 +87,24 @@
         <input name="optionD" placeholder="选项 D"><br>
     </div>
     <textarea id="answer" name="answer" placeholder="参考答案"></textarea><br>
+    <input name="score" placeholder="分数"><br>
     <input type="submit" value="创建">
 </form>
 <hr>
 <table border="1">
     <tr>
         <th>序号</th>
-        <th>TYPE</th>
-        <th>QUESTION</th>
-        <th>OPTIONA</th>
-        <th>OPTIONB</th>
-        <th>OPTIONC</th>
-        <th>OPTIOND</th>
-        <th>ANSWER</th>
-        <th colspan="2">OPERATION</th>
+        <th>题型</th>
+        <th>题目</th>
+        <th>选项A</th>
+        <th>选项B</th>
+        <th>选项C</th>
+        <th>选项D</th>
+        <th>参考答案</th>
+        <th>分数</th>
+        <th colspan="2">操作</th>
     </tr>
+    <c:set var="totalScore"/>
     <c:forEach var="test" items="${sessionScope.paper.tests}" varStatus="vs">
         <tr>
             <td>${vs.count}</td>
@@ -101,18 +115,21 @@
             <td>${test.optionC}</td>
             <td>${test.optionD}</td>
             <td>${test.answer}</td>
+            <td>${test.score}</td>
             <td><a href="${ctx}/test/queryById/${test.id}">MODIFY</a></td>
             <td><a class="delete" href="${ctx }/test/remove/${test.id}" onclick="return del()">REMOVE</a></td>
         </tr>
+        <c:set var="totalScore" value="${totalScore + test.score}"/>
     </c:forEach>
 </table>
+当前试卷总分：${totalScore}
 <hr>
 <button>预览试卷</button>
 <div id="preview">
     <h2>一、选择题</h2>
-    <c:forEach var="test" items="${sessionScope.paper.tests}" varStatus="vs1">
+    <c:forEach var="test" items="${sessionScope.paper.tests}">
         <c:if test="${test.type == '选择题'}">
-            ${vs1.count}. ${test.question}<br>
+            <div class="x">${test.question}</div>
             <input type="radio" name="${test.id}">A. ${test.optionA}<br>
             <input type="radio" name="${test.id}">B. ${test.optionB}<br>
             <input type="radio" name="${test.id}">C. ${test.optionC}<br>
@@ -120,22 +137,22 @@
         </c:if>
     </c:forEach>
     <h2>二、填空题</h2>
-    <c:forEach var="test" items="${sessionScope.paper.tests}" varStatus="vs2">
+    <c:forEach var="test" items="${sessionScope.paper.tests}">
         <c:if test="${test.type == '填空题'}">
-            <div class="space" id="${test.id}">${vs2.count}. ${test.question}</div>
+            <div class="t" title="${test.id}">${test.question}</div>
         </c:if>
     </c:forEach>
     <h2>三、简答题</h2>
-    <c:forEach var="test" items="${sessionScope.paper.tests}" varStatus="vs3">
+    <c:forEach var="test" items="${sessionScope.paper.tests}">
         <c:if test="${test.type == '简答题'}">
-            ${vs3.count}. ${test.question}<br>
+            <div class="j">${test.question}</div>
             <textarea name="${test.id}"></textarea><br>
         </c:if>
     </c:forEach>
     <h2>三、编程题</h2>
-    <c:forEach var="test" items="${sessionScope.paper.tests}" varStatus="vs3">
+    <c:forEach var="test" items="${sessionScope.paper.tests}">
         <c:if test="${test.type == '编程题'}">
-            ${vs3.count}. ${test.question}<br>
+            <div class="b">${test.question}</div>
             <input type="file" name="${test.id}"><br>
         </c:if>
     </c:forEach>
