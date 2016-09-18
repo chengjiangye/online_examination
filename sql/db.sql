@@ -139,6 +139,8 @@ CREATE TABLE db_examination.test (
   optionC  VARCHAR(255) COMMENT '选项C',
   optionD  VARCHAR(255) COMMENT '选项D',
   answer   TEXT COMMENT '答案',
+  score    INT           NOT NULL
+  COMMENT '分数',
   paperId  INT UNSIGNED COMMENT 'FK'
 )
   COMMENT '试题表';
@@ -191,3 +193,6 @@ FROM db_examination.course;
 
 SELECT *
 FROM db_examination.paper;
+
+SELECT *
+FROM db_examination.test;

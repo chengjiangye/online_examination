@@ -106,7 +106,15 @@
 <hr>
 <button>预览试卷</button>
 <div id="preview">
-    preview...
+    <c:forEach var="test" items="${sessionScope.paper.tests}" varStatus="vs">
+        <c:if test="${test.type == '选择题'}">
+            ${vs.count}. ${test.question}<br>
+            <input type="radio" name="${test.id}">A. ${test.optionA}<br>
+            <input type="radio" name="${test.id}">B. ${test.optionB}<br>
+            <input type="radio" name="${test.id}">C. ${test.optionC}<br>
+            <input type="radio" name="${test.id}">D. ${test.optionD}<br>
+        </c:if>
+    </c:forEach>
 </div>
 </body>
 </html>
