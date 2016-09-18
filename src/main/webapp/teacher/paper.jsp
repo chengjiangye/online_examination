@@ -10,6 +10,9 @@
 <html>
 <head>
     <title>试卷 - 教师</title>
+    <style>
+        @import "${ctx}/static/css/style.css";
+    </style>
     <script src="${ctx}/static/js/jquery-3.1.0.min.js"></script>
     <script>
         function del() {
@@ -28,6 +31,15 @@
                     $('#answer').hide();
                 } else {
                     $('#answer').show();
+                }
+            });
+
+            $('button').click(function () {
+                $('#preview').toggle();
+                if ($('#preview').css('display') == 'none') {
+                    $(this).text('预览试卷');
+                } else {
+                    $(this).text('取消预览');
                 }
             });
         });
@@ -91,5 +103,10 @@
         </tr>
     </c:forEach>
 </table>
+<hr>
+<button>预览试卷</button>
+<div id="preview">
+    preview...
+</div>
 </body>
 </html>
