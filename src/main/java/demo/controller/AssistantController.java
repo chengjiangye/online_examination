@@ -3,7 +3,9 @@ package demo.controller;
 import demo.model.Assistant;
 import demo.model.Class;
 import demo.service.AssistantService;
+import demo.service.ClassPaperService;
 import demo.service.ClassService;
+import demo.service.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,12 @@ public class AssistantController extends BaseController {
 
     @Autowired
     private ClassService classService;
+
+    @Autowired
+    private PaperService paperService;
+
+    @Autowired
+    private ClassPaperService classPaperService;
 
     @RequestMapping("login")
     private String login(Assistant assistant) {
@@ -34,5 +42,13 @@ public class AssistantController extends BaseController {
     private String queryStudentsByClassId(@PathVariable int id) {
         session.setAttribute("clazz", classService.query("class.queryStudentsByClassId", id));
         return "redirect:/assistant/students.jsp";
+    }
+
+    @RequestMapping("queryClassAndPaper")
+    private String queryClassAndPaper() {
+        session.setAttribute("classes", classService.list());
+        session.setAttribute("papers", paperService.queryList("paper.queryPapers", null));
+        session.setAttribute("classPapers", classPaperService.queryList("classpaper.classPapers", null));
+        return "redirect:/assistant/examination.jsp";
     }
 }

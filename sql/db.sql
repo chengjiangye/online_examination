@@ -232,3 +232,16 @@ FROM db_examination.test;
 
 SELECT *
 FROM db_examination.class_paper;
+
+SELECT
+  c1.title,
+  c2.title,
+  p.id,
+  cp.time,
+  cp.status,
+  a.username
+FROM db_examination.class_paper cp INNER JOIN db_examination.class c1
+  INNER JOIN db_examination.assistant a
+  INNER JOIN db_examination.paper p
+  INNER JOIN db_examination.course c2
+    ON cp.classId = c1.id AND cp.paperId = p.id AND cp.assistantId = a.id AND p.courseId = c2.id

@@ -48,6 +48,6 @@
     </c:forEach>
 </table>
 <hr>
-<a href="${ctx}/assistant/examination.jsp">维护考试信息</a>
+<a href="${ctx}/assistant/queryClassAndPaper">维护考试信息</a>
 </body>
 </html>

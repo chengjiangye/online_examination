@@ -42,7 +42,7 @@
         );
     </insert>
 
-    <resultMap id="map_queryPapersByTeacherId" type="paper">
+    <resultMap id="map_queryPapers" type="paper">
         <id property="id" column="id"/>
         <result property="time" column="time"/>
         <result property="score" column="score"/>
@@ -53,7 +53,7 @@
             <result property="title" column="title"/>
         </association>
     </resultMap>
-    <select id="queryPapersByTeacherId" parameterType="int" resultMap="map_queryPapersByTeacherId">
+    <select id="queryPapersByTeacherId" parameterType="int" resultMap="map_queryPapers">
         SELECT
             p.id,
             p.time,
@@ -64,6 +64,17 @@
             INNER JOIN db_examination.course c
                 ON p.teacherId = t.id AND p.courseId = c.id
         WHERE t.id = #{id}
+    </select>
+    <select id="queryPapers" resultMap="map_queryPapers">
+        SELECT
+            p.id,
+            p.time,
+            p.score,
+            t.username,
+            c.title
+        FROM db_examination.paper p INNER JOIN db_examination.teacher t
+            INNER JOIN db_examination.course c
+                ON p.teacherId = t.id AND p.courseId = c.id
     </select>
 
     <resultMap id="map_queryPaperByPaperId" type="paper">
