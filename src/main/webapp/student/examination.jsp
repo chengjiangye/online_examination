@@ -29,6 +29,13 @@
             $.each($('.b'), function (index) {
                 $(this).prepend(index + 1 + '. ');
             });
+
+            var bScoreTotal = 0;
+            $.each($('.b_score'), function () {
+                bScoreTotal += $(this).text();
+            });
+
+            $('.b_score_total').text(bScoreTotal);
         });
     </script>
 </head>
@@ -41,42 +48,42 @@
 <img src="${ctx}/static/photo/${sessionScope.student.photo}" alt="${sessionScope.student.username}"
      title="${sessionScope.student.username}" width="80">
 <hr>
-<div>
+<div id="paper">
     <h1>${sessionScope.paper.course.title} 课程考试</h1>
-    <small>考试时间：${sessionScope.paper.time}分钟</small>
-    <small>总分：${sessionScope.paper.score}</small>
+    <h2>考试时间：${sessionScope.paper.time}分钟</h2>
+    <h2>总分：${sessionScope.paper.score}</h2>
     <form action="${ctx}/student/" method="post" enctype="multipart/form-data">
-        <h2>一、选择题</h2>
+        <h3>一、选择题</h3>
         <c:forEach var="test" items="${sessionScope.paper.tests}">
             <c:if test="${test.type == '选择题'}">
-                <div class="x">${test.question}</div>
+                <div class="x">${test.question} （${test.score} 分）</div>
                 <input type="radio" name="${test.id}">A. ${test.optionA}<br>
                 <input type="radio" name="${test.id}">B. ${test.optionB}<br>
                 <input type="radio" name="${test.id}">C. ${test.optionC}<br>
                 <input type="radio" name="${test.id}">D. ${test.optionD}<br>
             </c:if>
         </c:forEach>
-        <h2>二、填空题</h2>
+        <h3>二、填空题</h3>
         <c:forEach var="test" items="${sessionScope.paper.tests}">
             <c:if test="${test.type == '填空题'}">
-                <div class="t" title="${test.id}">${test.question}</div>
+                <div class="t" title="${test.id}">${test.question} （${test.score} 分）</div>
             </c:if>
         </c:forEach>
-        <h2>三、简答题</h2>
+        <h3>三、简答题</h3>
         <c:forEach var="test" items="${sessionScope.paper.tests}">
             <c:if test="${test.type == '简答题'}">
-                <div class="j">${test.question}</div>
+                <div class="j">${test.question} （${test.score} 分）</div>
                 <textarea name="${test.id}"></textarea><br>
             </c:if>
         </c:forEach>
-        <h2>三、编程题</h2>
+        <h3>四、编程题 <b class="b_score_total"></b></h3>
         <c:forEach var="test" items="${sessionScope.paper.tests}">
             <c:if test="${test.type == '编程题'}">
-                <div class="b">${test.question}</div>
+                <div class="b">${test.question} （<span class="b_score">${test.score}</span> 分）</div>
                 <input type="file" name="${test.id}"><br>
             </c:if>
         </c:forEach>
-        <input type="submit" value="提交">
+        <div id="submit"><input type="submit" value="提交试卷"></div>
     </form>
 </div>
 </body>
