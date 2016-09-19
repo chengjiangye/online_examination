@@ -75,4 +75,19 @@
           INNER JOIN db_examination.course c2
             ON cp.classId = c1.id AND cp.paperId = p.id AND cp.assistantId = a.id AND p.courseId = c2.id
     </select>
+
+    <resultMap id="map_queryExamination" type="classpaper">
+        <association property="paper" javaType="paper">
+            <id property="id" column="id"/>
+            <association property="course" javaType="course">
+                <result property="title" column="title"/>
+            </association>
+        </association>
+    </resultMap>
+    <select id="queryExamination" parameterType="int" resultMap="map_queryExamination">
+        SELECT p.id, c.title
+        FROM db_examination.class_paper cp INNER JOIN db_examination.paper p INNER JOIN db_examination.course c
+            ON cp.paperId = p.id AND p.courseId = c.id
+        WHERE classId = #{id} AND (current_timestamp BETWEEN cp.time AND date_add(cp.time, INTERVAL p.time MINUTE));
+    </select>
 </mapper>

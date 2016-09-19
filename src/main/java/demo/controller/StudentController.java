@@ -1,6 +1,7 @@
 package demo.controller;
 
 import demo.model.Student;
+import demo.service.ClassPaperService;
 import demo.service.ClassService;
 import demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class StudentController extends BaseController {
 
     @Autowired
     private ClassService classService;
+
+    @Autowired
+    private ClassPaperService classPaperService;
 
     @RequestMapping("register")
     private String register(Student student, @RequestParam MultipartFile photoFile) {
@@ -69,6 +73,7 @@ public class StudentController extends BaseController {
         student = studentService.login(student);
         if (student != null) {
             session.setAttribute("student", student);
+            session.setAttribute("classPaper", classPaperService.query("classpaper.queryExamination", student.getClassId()));
             return "redirect:/student/student.jsp";
         }
         request.setAttribute("message", "邮箱或密码错误");

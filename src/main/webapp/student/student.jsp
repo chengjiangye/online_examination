@@ -18,5 +18,7 @@
 <h1>首页</h1>
 学生：${sessionScope.student.username}<br>
 <img src="${ctx}/static/photo/${sessionScope.student.photo}" alt="${sessionScope.student.username}" title="${sessionScope.student.username}" width="80">
+<hr>
+<a href="">${sessionScope.classPaper.paper.course.title} 课程考试</a>
 </body>
 </html>
