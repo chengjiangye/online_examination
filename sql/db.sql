@@ -252,3 +252,7 @@ FROM db_examination.class_paper cp INNER JOIN db_examination.paper p INNER JOIN 
     ON cp.paperId = p.id AND p.courseId = c.id
 WHERE classId = 1 AND (current_timestamp BETWEEN cp.time AND date_add(cp.time, INTERVAL p.time MINUTE));
 
+SELECT *
+FROM db_examination.test
+WHERE id = 19;
+

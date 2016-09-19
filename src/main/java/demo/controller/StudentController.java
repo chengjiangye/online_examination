@@ -3,6 +3,7 @@ package demo.controller;
 import demo.model.Student;
 import demo.service.ClassPaperService;
 import demo.service.ClassService;
+import demo.service.PaperService;
 import demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,9 @@ public class StudentController extends BaseController {
 
     @Autowired
     private ClassPaperService classPaperService;
+
+    @Autowired
+    private PaperService paperService;
 
     @RequestMapping("register")
     private String register(Student student, @RequestParam MultipartFile photoFile) {
@@ -78,5 +82,11 @@ public class StudentController extends BaseController {
         }
         request.setAttribute("message", "邮箱或密码错误");
         return "/student/index.jsp";
+    }
+
+    @RequestMapping("queryPaperByPaperId/{id}")
+    private String queryPaperByPaperId(@PathVariable int id) {
+        session.setAttribute("paper", paperService.query("paper.queryPaperByPaperId", id));
+        return "redirect:/student/examination.jsp";
     }
 }
