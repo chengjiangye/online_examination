@@ -53,7 +53,7 @@
             <td>${vs.count}</td>
             <td>${classPaper.clazz.title}</td>
             <td>${classPaper.paper.course.title} 试卷${classPaper.paper.id}</td>
-            <td>${classPaper.time}</td>
+            <td><fmt:formatDate value="${classPaper.time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
             <td>${classPaper.status}</td>
             <td>${classPaper.assistant.username}</td>
             <td><a href="">修改</a></td>
