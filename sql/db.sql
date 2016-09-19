@@ -145,8 +145,20 @@ CREATE TABLE db_examination.test (
 )
   COMMENT '试题表';
 
-# ALTER TABLE db_examination.test
-#     ADD COLUMN score int not NULL ;
+-- table class_paper
+DROP TABLE IF EXISTS db_examination.class_paper;
+CREATE TABLE db_examination.class_paper (
+  id          INT UNSIGNED          AUTO_INCREMENT PRIMARY KEY
+  COMMENT 'PK',
+  time        DATETIME     NOT NULL
+  COMMENT '考试时间',
+  status      VARCHAR(255) NOT NULL DEFAULT '未考试'
+  COMMENT '考试状态：未考试；考试中；考试结束；判卷结束',
+  classId     INT UNSIGNED COMMENT 'FK',
+  paperId     INT UNSIGNED COMMENT 'FK',
+  assistantId INT UNSIGNED COMMENT 'FK'
+)
+  COMMENT '班级-试卷表';
 
 -- FOREIGN KEY ----------------------------------------------------------
 
@@ -174,6 +186,24 @@ ADD CONSTRAINT
 FOREIGN KEY (paperId)
 REFERENCES db_examination.paper (id);
 
+ALTER TABLE db_examination.class_paper
+ADD CONSTRAINT
+  fk_class_paper_classId
+FOREIGN KEY (classId)
+REFERENCES db_examination.class (id);
+
+ALTER TABLE db_examination.class_paper
+ADD CONSTRAINT
+  fk_class_paper_paperId
+FOREIGN KEY (paperId)
+REFERENCES db_examination.paper (id);
+
+ALTER TABLE db_examination.class_paper
+ADD CONSTRAINT
+  fk_class_paper_assistantId
+FOREIGN KEY (assistantId)
+REFERENCES db_examination.assistant (id);
+
 -- SELECT ---------------------------------------------------------------
 
 SELECT *
@@ -199,3 +229,6 @@ FROM db_examination.paper;
 
 SELECT *
 FROM db_examination.test;
+
+SELECT *
+FROM db_examination.class_paper;
