@@ -160,6 +160,17 @@ CREATE TABLE db_examination.class_paper (
 )
   COMMENT '班级-试卷表';
 
+-- table student_test
+DROP TABLE IF EXISTS db_examination.student_test;
+CREATE TABLE db_examination.student_test (
+  id        INT UNSIGNED AUTO_INCREMENT PRIMARY KEY
+  COMMENT 'PK',
+  answer    TEXT COMMENT '答案',
+  studentId INT UNSIGNED COMMENT 'FK',
+  testId    INT UNSIGNED COMMENT 'FK'
+)
+  COMMENT '学生-试题表';
+
 -- FOREIGN KEY ----------------------------------------------------------
 
 ALTER TABLE db_examination.student
@@ -204,6 +215,18 @@ ADD CONSTRAINT
 FOREIGN KEY (assistantId)
 REFERENCES db_examination.assistant (id);
 
+ALTER TABLE db_examination.student_test
+ADD CONSTRAINT
+  fk_student_test_studentId
+FOREIGN KEY (studentId)
+REFERENCES db_examination.student (id);
+
+ALTER TABLE db_examination.student_test
+ADD CONSTRAINT
+  fk_student_test_testId
+FOREIGN KEY (testId)
+REFERENCES db_examination.test (id);
+
 -- SELECT ---------------------------------------------------------------
 
 SELECT *
@@ -232,3 +255,6 @@ FROM db_examination.test;
 
 SELECT *
 FROM db_examination.class_paper;
+
+SELECT *
+FROM db_examination.student_test;

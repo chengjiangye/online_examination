@@ -47,7 +47,7 @@
                 $(this).prepend(index + 1 + '. ');
             });
             $.each($('.t'), function (index) {
-                $(this).html($(this).text().replace('###', '<input name="' + $(this).attr('title') + '">'));
+                $(this).html($(this).text().replace('###', '<input name="' + $(this).attr('title') + '" value="t...">'));
                 $(this).prepend(index + 1 + '. ');
             });
             $.each($('.j'), function (index) {
@@ -76,15 +76,15 @@
     <h1>${sessionScope.paper.course.title} 课程考试</h1>
     <h2>考试时间：${sessionScope.paper.time}分钟</h2>
     <h2>总分：${sessionScope.paper.score}</h2>
-    <form action="" method="get" enctype="multipart/form-data">
+    <form action="${ctx}/studenttest/create" method="post" enctype="multipart/form-data">
         <h3>一、选择题 <b class="x_score_total"></b></h3>
         <c:forEach var="test" items="${sessionScope.paper.tests}">
             <c:if test="${test.type == '选择题'}">
                 <div class="x">${test.question} （<span class="x_score">${test.score}</span> 分）</div>
-                <input type="radio" name="${test.id}">A. ${test.optionA}<br>
-                <input type="radio" name="${test.id}">B. ${test.optionB}<br>
-                <input type="radio" name="${test.id}">C. ${test.optionC}<br>
-                <input type="radio" name="${test.id}">D. ${test.optionD}<br>
+                <input type="radio" name="${test.id}" value="A" checked="checked">A. ${test.optionA}<br>
+                <input type="radio" name="${test.id}" value="B">B. ${test.optionB}<br>
+                <input type="radio" name="${test.id}" value="C">C. ${test.optionC}<br>
+                <input type="radio" name="${test.id}" value="D">D. ${test.optionD}<br>
             </c:if>
         </c:forEach>
         <h3>二、填空题 <b class="t_score_total"></b></h3>
@@ -97,7 +97,7 @@
         <c:forEach var="test" items="${sessionScope.paper.tests}">
             <c:if test="${test.type == '简答题'}">
                 <div class="j">${test.question} （<span class="j_score">${test.score}</span> 分）</div>
-                <textarea name="${test.id}"></textarea><br>
+                <textarea name="${test.id}">j...</textarea><br>
             </c:if>
         </c:forEach>
         <h3>四、编程题 <b class="b_score_total"></b></h3>
