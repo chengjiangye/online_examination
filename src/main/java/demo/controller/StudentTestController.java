@@ -22,8 +22,8 @@ public class StudentTestController extends BaseController {
         Student student = (Student) session.getAttribute("student");
         int studentId = student.getId();
         Map<String, String[]> map = request.getParameterMap();
-        for (String s : map.keySet()) {
-            StudentTest studentTest = new StudentTest(null, map.get(s)[0], studentId, Integer.parseInt(s));
+        for (String testIdString : map.keySet()) {
+            StudentTest studentTest = new StudentTest(null, map.get(testIdString)[0], studentId, Integer.parseInt(testIdString));
             studenttestService.create(studentTest);
         }
         return "redirect:/student/student.jsp";
