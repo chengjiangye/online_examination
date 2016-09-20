@@ -8,6 +8,7 @@
 }
 
 #paper {
+    background-color: #f0ffff;
     width: 1000px;
     margin: 50px auto;
     padding: 50px;
@@ -21,7 +22,7 @@
 }
 
 #paper h2 {
-    color: #666;;
+    color: #666;
 }
 #paper input[type='radio'],
 .x,
