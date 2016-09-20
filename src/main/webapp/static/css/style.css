@@ -28,12 +28,18 @@ small.hint {
 #paper h2 {
     color: #666;
 }
+
+#paper h3 {
+    margin-top: 20px;
+}
+
 #paper input[type='radio'],
 .x,
 .t,
 .j,
 .b {
-    margin: 10px;
+    margin: 10px 40px;
+    text-indent: -24px;
 }
 
 #paper input[type='radio'],
@@ -59,6 +65,6 @@ textarea {
 #paper input[type='submit'] {
     font-size: 2em;
     width: 200px;
-    height:50px;
+    height: 50px;
     margin-top: 50px;
 }
