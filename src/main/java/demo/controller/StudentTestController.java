@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -18,15 +20,19 @@ public class StudentTestController extends BaseController {
     private StudentTestService studenttestService;
 
     @RequestMapping("create")
-    private String create() {
-        Student student = (Student) session.getAttribute("student");
-        int studentId = student.getId();
-        Map<String, String[]> map = request.getParameterMap();
-        for (String testIdString : map.keySet()) {
-            StudentTest studentTest = new StudentTest(null, map.get(testIdString)[0], studentId, Integer.parseInt(testIdString));
-            studenttestService.create(studentTest);
+    private String create(@RequestParam MultipartFile[] files) {
+        for (MultipartFile file : files) {
+            System.out.println(file.getOriginalFilename());
         }
-        return "redirect:/student/student.jsp";
+//        Student student = (Student) session.getAttribute("student");
+//        int studentId = student.getId();
+//        Map<String, String[]> map = request.getParameterMap();
+//        for (String testIdString : map.keySet()) {
+//            StudentTest studentTest = new StudentTest(null, map.get(testIdString)[0], studentId, Integer.parseInt(testIdString));
+//            studenttestService.create(studentTest);
+//        }
+//        return "redirect:/student/student.jsp";
+        return null;
     }
 
     @RequestMapping("list")

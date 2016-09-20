@@ -104,7 +104,7 @@
         <c:forEach var="test" items="${sessionScope.paper.tests}">
             <c:if test="${test.type == '编程题'}">
                 <div class="b">${test.question} （<span class="b_score">${test.score}</span> 分）</div>
-                <input type="file" name="${test.id}"><br>
+                <input type="file" name="files"><small class="hint">文件名为 ${test.id}.rar 或 ${test.id}.zip</small><br>
             </c:if>
         </c:forEach>
         <div id="submit"><input type="submit" value="提交试卷"></div>

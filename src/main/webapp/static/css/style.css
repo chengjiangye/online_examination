@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+small.hint {
+    color: #900;
+}
+
 #preview {
     display: none;
 }
