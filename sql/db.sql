@@ -258,3 +258,5 @@ FROM db_examination.class_paper;
 
 SELECT *
 FROM db_examination.student_test;
+
+TRUNCATE TABLE db_examination.student_test;

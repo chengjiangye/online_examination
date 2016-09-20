@@ -76,7 +76,7 @@
     <h1>${sessionScope.paper.course.title} 课程考试</h1>
     <h2>考试时间：${sessionScope.paper.time}分钟</h2>
     <h2>总分：${sessionScope.paper.score}</h2>
-    <form action="${ctx}/studenttest/create" method="post" enctype="multipart/form-data">
+    <form action="${ctx}/studenttest/submit" method="post" enctype="multipart/form-data">
         <h3>一、选择题 <b class="x_score_total"></b></h3>
         <c:forEach var="test" items="${sessionScope.paper.tests}">
             <c:if test="${test.type == '选择题'}">
