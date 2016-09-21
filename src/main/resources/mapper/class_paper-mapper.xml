@@ -48,6 +48,7 @@
         <result property="time" column="time"/>
         <result property="status" column="status"/>
         <association property="clazz" javaType="class">
+            <id property="id" column="classId"/>
             <result property="title" column="title"/>
         </association>
         <association property="paper" javaType="paper">
@@ -80,6 +81,7 @@
             cp.id,
             cp.time,
             cp.status,
+            c1.id AS classId,
             c1.title,
             p.id     AS paperId,
             a.username,

@@ -2,10 +2,7 @@ package demo.controller;
 
 import demo.model.Paper;
 import demo.model.Teacher;
-import demo.service.ClassPaperService;
-import demo.service.CourseService;
-import demo.service.PaperService;
-import demo.service.TeacherService;
+import demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +23,9 @@ public class TeacherController extends BaseController {
 
     @Autowired
     private ClassPaperService classPaperService;
+
+    @Autowired
+    private ClassService classService;
 
     @RequestMapping("login")
     private String login(Teacher teacher) {
@@ -53,5 +53,11 @@ public class TeacherController extends BaseController {
     private String queryPaperByPaperId(@PathVariable int id) {
         session.setAttribute("paper", paperService.query("paper.queryPaperByPaperId", id));
         return "redirect:/teacher/paper.jsp";
+    }
+
+    @RequestMapping("queryStudentsByClassId/{id}")
+    private String queryStudentsByClassId(@PathVariable int id) {
+        session.setAttribute("clazz", classService.query("class.queryStudentsByClassId", id));
+        return "redirect:/teacher/students.jsp";
     }
 }

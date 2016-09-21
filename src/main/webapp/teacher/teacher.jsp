@@ -57,7 +57,7 @@
 <hr>
 <ol>
     <c:forEach var="classPaper" items="${sessionScope.classPapers}">
-        <li><a href="">${classPaper.clazz.title} ${classPaper.paper.course.title} 考试</a></li>
+        <li><a href="${ctx}/teacher/queryStudentsByClassId/${classPaper.clazz.id}">${classPaper.clazz.title} ${classPaper.paper.course.title} 考试</a></li>
     </c:forEach>
 </ol>
 </body>
