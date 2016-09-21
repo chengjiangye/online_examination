@@ -30,9 +30,9 @@
     </delete>
     <insert id="create" parameterType="classpaper" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO db_examination.class_paper (
-            time, 
+            time,
             classId,
-            paperId, 
+            paperId,
             assistantId
         )
         VALUES (
@@ -62,18 +62,34 @@
     </resultMap>
     <select id="classPapers" resultMap="map_classPapers">
         SELECT
-          cp.id,
-          cp.time,
-          cp.status,
-          c1.title,
-          p.id AS paperId,
-          a.username,
-          c2.title AS courseTitle
+            cp.id,
+            cp.time,
+            cp.status,
+            c1.title,
+            p.id     AS paperId,
+            a.username,
+            c2.title AS courseTitle
         FROM db_examination.class_paper cp INNER JOIN db_examination.class c1
-          INNER JOIN db_examination.assistant a
-          INNER JOIN db_examination.paper p
-          INNER JOIN db_examination.course c2
-            ON cp.classId = c1.id AND cp.paperId = p.id AND cp.assistantId = a.id AND p.courseId = c2.id
+            INNER JOIN db_examination.assistant a
+            INNER JOIN db_examination.paper p
+            INNER JOIN db_examination.course c2
+                ON cp.classId = c1.id AND cp.paperId = p.id AND cp.assistantId = a.id AND p.courseId = c2.id
+    </select>
+    <select id="queryClassPapersByStatus" parameterType="java.lang.String" resultMap="map_classPapers">
+        SELECT
+            cp.id,
+            cp.time,
+            cp.status,
+            c1.title,
+            p.id     AS paperId,
+            a.username,
+            c2.title AS courseTitle
+        FROM db_examination.class_paper cp INNER JOIN db_examination.class c1
+            INNER JOIN db_examination.assistant a
+            INNER JOIN db_examination.paper p
+            INNER JOIN db_examination.course c2
+                ON cp.classId = c1.id AND cp.paperId = p.id AND cp.assistantId = a.id AND p.courseId = c2.id
+        WHERE cp.status = #{status}
     </select>
 
     <resultMap id="map_queryExamination" type="classpaper">
@@ -85,9 +101,12 @@
         </association>
     </resultMap>
     <select id="queryExamination" parameterType="int" resultMap="map_queryExamination">
-        SELECT p.id, c.title
-        FROM db_examination.class_paper cp INNER JOIN db_examination.paper p INNER JOIN db_examination.course c
-            ON cp.paperId = p.id AND p.courseId = c.id
+        SELECT
+            p.id,
+            c.title
+        FROM db_examination.class_paper cp INNER JOIN db_examination.paper p
+            INNER JOIN db_examination.course c
+                ON cp.paperId = p.id AND p.courseId = c.id
         WHERE classId = #{id} AND (current_timestamp BETWEEN cp.time AND date_add(cp.time, INTERVAL p.time MINUTE));
     </select>
 </mapper>

@@ -11,7 +11,9 @@
 <head>
     <title>首页 - 教师</title>
     <script>
-        function del() { return confirm('REMOVE?'); }
+        function del() {
+            return confirm('REMOVE?');
+        }
     </script>
 </head>
 <body>
@@ -52,5 +54,11 @@
         </tr>
     </c:forEach>
 </table>
+<hr>
+<ol>
+    <c:forEach var="classPaper" items="${sessionScope.classPapers}">
+        <li><a href="">${classPaper.clazz.title} ${classPaper.paper.course.title} 考试</a></li>
+    </c:forEach>
+</ol>
 </body>
 </html>
