@@ -14,7 +14,7 @@
         FROM db_examination.class_paper
         WHERE id = #{id}
     </select>
-    <update id="modify">
+    <update id="modify" parameterType="classpaper">
         UPDATE db_examination.class_paper
         SET
             time = #{time}, 

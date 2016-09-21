@@ -31,8 +31,8 @@ public class ClassPaperController extends BaseController {
 
     @RequestMapping("queryById/{id}")
     private String search(@PathVariable("id") Integer id) {
-        session.setAttribute("classpaper", classPaperService.queryById(id));
-        return "redirect:/classpaper/edit.jsp";
+        session.setAttribute("classPaper", classPaperService.queryById(id));
+        return "redirect:/assistant/editClassPaper.jsp";
     }
 
     @RequestMapping("modify")

@@ -56,7 +56,7 @@
             <td><fmt:formatDate value="${classPaper.time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
             <td>${classPaper.status}</td>
             <td>${classPaper.assistant.username}</td>
-            <td><a href="">修改</a></td>
+            <td><a href="${ctx}/classpaper/queryById/${classPaper.id}">修改</a></td>
             <td><a href="">删除</a></td>
         </tr>
     </c:forEach>
