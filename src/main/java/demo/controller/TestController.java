@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 @RequestMapping("test")
 public class TestController extends BaseController {
@@ -43,4 +46,14 @@ public class TestController extends BaseController {
         testService.remove(id);
         return "redirect:/test/list";
     }
+
+    @RequestMapping("queryTestsByStudentIdAndPaperId/{studentId}/{paperId}")
+    private String queryTestsByStudentIdAndPaperId(@PathVariable int studentId, @PathVariable int paperId) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("studentId", studentId);
+        map.put("paperId", paperId);
+        session.setAttribute("tests", testService.queryList("test.queryTestsByStudentIdAndPaperId", map));
+        return "redirect:/teacher/judge.jsp";
+    }
+
 }

@@ -55,9 +55,10 @@ public class TeacherController extends BaseController {
         return "redirect:/teacher/paper.jsp";
     }
 
-    @RequestMapping("queryStudentsByClassId/{id}")
-    private String queryStudentsByClassId(@PathVariable int id) {
-        session.setAttribute("clazz", classService.query("class.queryStudentsByClassId", id));
+    @RequestMapping("queryStudentsByClassId/{classId}/{paperId}")
+    private String queryStudentsByClassId(@PathVariable int classId, @PathVariable int paperId) {
+        session.setAttribute("clazz", classService.query("class.queryStudentsByClassId", classId));
+        session.setAttribute("paperId", paperId);
         return "redirect:/teacher/students.jsp";
     }
 }

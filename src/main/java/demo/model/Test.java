@@ -3,6 +3,8 @@ package demo.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Test extends BaseModel {
@@ -17,4 +19,6 @@ public class Test extends BaseModel {
     private String answer;
     private int score;
     private int paperId;
+
+    private List<StudentTest> studentTests;
 }

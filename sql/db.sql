@@ -260,3 +260,10 @@ SELECT *
 FROM db_examination.student_test;
 
 TRUNCATE TABLE db_examination.student_test;
+
+SELECT *
+FROM db_examination.student_test st INNER JOIN db_examination.student s
+  INNER JOIN db_examination.test t
+  INNER JOIN db_examination.paper p
+    ON st.studentId = s.id AND st.testId = t.id AND t.paperId = p.id
+WHERE s.id = 1 AND p.id = 2;

@@ -20,7 +20,7 @@
 <hr>
 <ol>
     <c:forEach var="student" items="${sessionScope.clazz.students}">
-        <li><a href="">${student.username}</a></li>
+        <li><a href="${ctx}/test/queryTestsByStudentIdAndPaperId/${student.id}/${sessionScope.paperId}">${student.username}</a></li>
     </c:forEach>
 </ol>
 </body>
