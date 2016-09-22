@@ -166,10 +166,15 @@ CREATE TABLE db_examination.student_test (
   id        INT UNSIGNED AUTO_INCREMENT PRIMARY KEY
   COMMENT 'PK',
   answer    TEXT COMMENT '答案',
+  score     INT COMMENT '得分',
   studentId INT UNSIGNED COMMENT 'FK',
   testId    INT UNSIGNED COMMENT 'FK'
 )
   COMMENT '学生-试题表';
+
+# ALTER TABLE db_examination.student_test
+# ADD COLUMN score INT
+# AFTER answer;
 
 -- FOREIGN KEY ----------------------------------------------------------
 
