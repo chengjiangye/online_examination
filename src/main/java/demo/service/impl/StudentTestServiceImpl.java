@@ -32,7 +32,7 @@ public class StudentTestServiceImpl extends GenericServiceImpl<StudentTest, Inte
         Map<String, String[]> map = request.getParameterMap();
         for (String testIdString : map.keySet()) {
             int testId = Integer.parseInt(testIdString);
-            StudentTest studentTest = new StudentTest(null, map.get(testIdString)[0], studentId, testId);
+            StudentTest studentTest = new StudentTest(null, map.get(testIdString)[0], 0, studentId, testId, null);
             genericDao.create(studentTest);
         }
 
@@ -46,7 +46,7 @@ public class StudentTestServiceImpl extends GenericServiceImpl<StudentTest, Inte
             try {
                 file.transferTo(new File(photoPath, codeName));
                 int testId = Integer.parseInt(file.getOriginalFilename().replace("." + extension, ""));
-                StudentTest studentTest = new StudentTest(null, codeName, studentId, testId);
+                StudentTest studentTest = new StudentTest(null, codeName, 0, studentId, testId, null);
                 genericDao.create(studentTest);
             } catch (IOException e) {
                 e.printStackTrace();

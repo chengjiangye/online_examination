@@ -20,5 +20,6 @@ public class Test extends BaseModel {
     private int score;
     private int paperId;
 
+    private Paper paper;
     private List<StudentTest> studentTests;
 }

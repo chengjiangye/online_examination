@@ -1,9 +1,6 @@
 package demo.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -13,6 +10,9 @@ public class StudentTest extends BaseModel {
 
     private Integer id;
     private String answer;
+    private int score;
     private int studentId;
     private int testId;
+
+    private Student student;
 }

@@ -34,12 +34,12 @@
     </delete>
     <insert id="create" parameterType="test" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO db_examination.test (
-            type, 
-            question, 
-            optionA, 
-            optionB, 
-            optionC, 
-            optionD, 
+            type,
+            question,
+            optionA,
+            optionB,
+            optionC,
+            optionD,
             answer,
             score,
             paperId
@@ -67,11 +67,22 @@
         <result property="answer" column="answer"/>
         <result property="score" column="score"/>
         <result property="type" column="type"/>
+        <association property="paper" javaType="paper">
+            <result property="score" column="paperScore"/>
+            <result property="time" column="time"/>
+            <association property="course" javaType="course">
+                <result property="title" column="title"/>
+            </association>
+        </association>
         <collection property="studentTests" ofType="studenttest">
             <result property="answer" column="studentTestAnswer"/>
+            <association property="student" javaType="student">
+                <result property="username" column="username"/>
+            </association>
         </collection>
     </resultMap>
-    <select id="queryTestsByStudentIdAndPaperId" parameterType="hashmap" resultMap="map_queryTestsByStudentIdAndPaperId">
+    <select id="queryTestsByStudentIdAndPaperId" parameterType="hashmap"
+            resultMap="map_queryTestsByStudentIdAndPaperId">
         SELECT
             t.id,
             t.question,
@@ -82,11 +93,17 @@
             t.answer,
             t.score,
             t.type,
+            p.score AS paperScore,
+            p.time,
+            c.title,
+            s.username,
             st.answer AS studentTestAnswer
-        FROM db_examination.student_test st INNER JOIN db_examination.student s
+        FROM db_examination.student_test st
+            INNER JOIN db_examination.student s
             INNER JOIN db_examination.test t
             INNER JOIN db_examination.paper p
-                ON st.studentId = s.id AND st.testId = t.id AND t.paperId = p.id
+            INNER JOIN db_examination.course c
+                ON st.studentId = s.id AND st.testId = t.id AND t.paperId = p.id AND p.courseId = c.id
         WHERE s.id = #{studentId} AND p.id = #{paperId};
     </select>
 </mapper>

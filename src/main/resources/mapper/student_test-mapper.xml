@@ -17,8 +17,9 @@
     <update id="modify">
         UPDATE db_examination.student_test
         SET
-            answer = #{answer}, 
-            studentId = #{studentId}, 
+            answer = #{answer},
+            score = #{score},
+            studentId = #{studentId},
             testId = #{testId}
         WHERE id = #{id}
     </update>
@@ -28,12 +29,14 @@
     </delete>
     <insert id="create" parameterType="studenttest" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO db_examination.student_test (
-            answer, 
-            studentId, 
+            answer,
+            score,
+            studentId,
             testId
         )
         VALUES (
-            #{answer}, 
+            #{answer},
+            #{score},
             #{studentId}, 
             #{testId}
         );
