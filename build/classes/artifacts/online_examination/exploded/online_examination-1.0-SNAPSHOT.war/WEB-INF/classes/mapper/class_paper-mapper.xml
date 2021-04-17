@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="classpaper">
+    <select id="list" resultType="classpaper">
+        SELECT *
+        FROM db_examination.class_paper
+        ORDER BY id
+    </select>
+    <select id="queryById" resultType="classpaper">
+        SELECT *
+        FROM db_examination.class_paper
+        WHERE id = #{id}
+    </select>
+    <update id="modify" parameterType="classpaper">
+        UPDATE db_examination.class_paper
+        SET
+            time = #{time}, 
+            status = #{status}, 
+            classId = #{classId}, 
+            paperId = #{paperId}, 
+            assistantId = #{assistantId}
+        WHERE id = #{id}
+    </update>
+    <delete id="remove">
+        DELETE FROM db_examination.class_paper
+        WHERE id = #{id}
+    </delete>
+    <insert id="create" parameterType="classpaper" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO db_examination.class_paper (
+            time,
+            classId,
+            paperId,
+            assistantId
+        )
+        VALUES (
+            #{time}, 
+            #{classId},
+            #{paperId}, 
+            #{assistantId}
+        );
+    </insert>
+
+    <resultMap id="map_classPapers" type="classpaper">
+        <id property="id" column="id"/>
+        <result property="time" column="time"/>
+        <result property="status" column="status"/>
+        <association property="clazz" javaType="class">
+            <id property="id" column="classId"/>
+            <result property="title" column="title"/>
+        </association>
+        <association property="paper" javaType="paper">
+            <id property="id" column="paperId"/>
+            <association property="course" javaType="course">
+                <result property="title" column="courseTitle"/>
+            </association>
+        </association>
+        <association property="assistant" javaType="assistant">
+            <result property="username" column="username"/>
+        </association>
+    </resultMap>
+    <select id="classPapers" resultMap="map_classPapers">
+        SELECT
+            cp.id,
+            cp.time,
+            cp.status,
+            c1.title,
+            p.id     AS paperId,
+            a.username,
+            c2.title AS courseTitle
+        FROM db_examination.class_paper cp INNER JOIN db_examination.class c1
+            INNER JOIN db_examination.assistant a
+            INNER JOIN db_examination.paper p
+            INNER JOIN db_examination.course c2
+                ON cp.classId = c1.id AND cp.paperId = p.id AND cp.assistantId = a.id AND p.courseId = c2.id
+    </select>
+    <select id="queryClassPapersByStatus" parameterType="java.lang.String" resultMap="map_classPapers">
+        SELECT
+            cp.id,
+            cp.time,
+            cp.status,
+            c1.id AS classId,
+            c1.title,
+            p.id     AS paperId,
+            a.username,
+            c2.title AS courseTitle
+        FROM db_examination.class_paper cp INNER JOIN db_examination.class c1
+            INNER JOIN db_examination.assistant a
+            INNER JOIN db_examination.paper p
+            INNER JOIN db_examination.course c2
+                ON cp.classId = c1.id AND cp.paperId = p.id AND cp.assistantId = a.id AND p.courseId = c2.id
+        WHERE cp.status = #{status}
+    </select>
+
+    <resultMap id="map_queryExamination" type="classpaper">
+        <association property="paper" javaType="paper">
+            <id property="id" column="id"/>
+            <association property="course" javaType="course">
+                <result property="title" column="title"/>
+            </association>
+        </association>
+    </resultMap>
+    <select id="queryExamination" parameterType="int" resultMap="map_queryExamination">
+        SELECT
+            p.id,
+            c.title
+        FROM db_examination.class_paper cp INNER JOIN db_examination.paper p
+            INNER JOIN db_examination.course c
+                ON cp.paperId = p.id AND p.courseId = c.id
+        WHERE classId = #{id} AND (current_timestamp BETWEEN cp.time AND date_add(cp.time, INTERVAL p.time MINUTE));
+    </select>
+</mapper>

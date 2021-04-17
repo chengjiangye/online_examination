@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="studenttest">
+    <select id="list" resultType="studenttest">
+        SELECT *
+        FROM db_examination.student_test
+        ORDER BY id
+    </select>
+    <select id="queryById" resultType="studenttest">
+        SELECT *
+        FROM db_examination.student_test
+        WHERE id = #{id}
+    </select>
+    <update id="modify">
+        UPDATE db_examination.student_test
+        SET
+            answer = #{answer},
+            score = #{score},
+            studentId = #{studentId},
+            testId = #{testId}
+        WHERE id = #{id}
+    </update>
+    <delete id="remove">
+        DELETE FROM db_examination.student_test
+        WHERE id = #{id}
+    </delete>
+    <insert id="create" parameterType="studenttest" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO db_examination.student_test (
+            answer,
+            score,
+            studentId,
+            testId
+        )
+        VALUES (
+            #{answer},
+            #{score},
+            #{studentId}, 
+            #{testId}
+        );
+    </insert>
+</mapper>

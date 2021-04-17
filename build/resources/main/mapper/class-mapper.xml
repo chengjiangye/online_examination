@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="class">
+    <select id="list" resultType="class">
+        SELECT *
+        FROM db_examination.class
+        ORDER BY id
+    </select>
+    <select id="queryById" resultType="class">
+        SELECT *
+        FROM db_examination.class
+        WHERE id = #{id}
+    </select>
+    <update id="modify">
+        UPDATE db_examination.class
+        SET
+            title = #{title}, 
+            start = #{start}, 
+            finish = #{finish}
+        WHERE id = #{id}
+    </update>
+    <delete id="remove">
+        DELETE FROM db_examination.class
+        WHERE id = #{id}
+    </delete>
+    <insert id="create" parameterType="class" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO db_examination.class (
+            title,
+            start,
+            finish
+        )
+        VALUES (
+            #{title}, 
+            #{start}, 
+            #{finish}
+        );
+    </insert>
+
+    <resultMap id="map_queryStudentsByClassId" type="class">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="start" column="start"/>
+        <result property="finish" column="finish"/>
+        <collection property="students" ofType="student">
+            <id property="id" column="studentId"/>
+            <result property="username" column="username"/>
+            <result property="photo" column="photo"/>
+            <result property="email" column="email"/>
+            <result property="username" column="username"/>
+            <result property="gender" column="gender"/>
+            <result property="dob" column="dob"/>
+            <result property="phone" column="phone"/>
+            <result property="education" column="education"/>
+            <result property="major" column="major"/>
+            <result property="academy" column="academy"/>
+            <result property="graduation" column="graduation"/>
+            <result property="training" column="training"/>
+            <result property="experience" column="experience"/>
+            <result property="photo" column="photo"/>
+            <result property="remark" column="remark"/>
+            <result property="card" column="card"/>
+            <result property="lastIp" column="lastIp"/>
+            <result property="lastLogin" column="lastLogin"/>
+        </collection>
+    </resultMap>
+    <select id="queryStudentsByClassId" parameterType="int" resultMap="map_queryStudentsByClassId">
+        SELECT
+            c.id,
+            c.title,
+            c.start,
+            c.finish,
+            s.id AS studentId,
+            s.username,
+            s.photo,
+            s.email,
+            s.username,
+            s.gender,
+            s.dob,
+            s.phone,
+            s.education,
+            s.major,
+            s.academy,
+            s.graduation,
+            s.training,
+            s.experience,
+            s.photo,
+            s.remark,
+            s.card,
+            s.lastIp,
+            s.lastLogin
+        FROM db_examination.class c INNER JOIN db_examination.student s
+                ON c.id = s.classId
+        WHERE c.id = #{id}
+    </select>
+</mapper>

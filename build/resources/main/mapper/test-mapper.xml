@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="test">
+    <select id="list" resultType="test">
+        SELECT *
+        FROM db_examination.test
+        ORDER BY id
+    </select>
+    <select id="queryById" resultType="test">
+        SELECT *
+        FROM db_examination.test
+        WHERE id = #{id}
+    </select>
+    <update id="modify">
+        UPDATE db_examination.test
+        SET
+            type = #{type}, 
+            question = #{question}, 
+            optionA = #{optionA}, 
+            optionB = #{optionB}, 
+            optionC = #{optionC}, 
+            optionD = #{optionD}, 
+            answer = #{answer},
+            score = #{score},
+            paperId = #{paperId}
+        WHERE id = #{id}
+    </update>
+    <delete id="remove">
+        DELETE FROM db_examination.test
+        WHERE id = #{id}
+    </delete>
+    <insert id="create" parameterType="test" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO db_examination.test (
+            type,
+            question,
+            optionA,
+            optionB,
+            optionC,
+            optionD,
+            answer,
+            score,
+            paperId
+        )
+        VALUES (
+            #{type}, 
+            #{question}, 
+            #{optionA}, 
+            #{optionB}, 
+            #{optionC}, 
+            #{optionD}, 
+            #{answer}, 
+            #{score},
+            #{paperId}
+        );
+    </insert>
+
+    <resultMap id="map_queryTestsByStudentIdAndPaperId" type="test">
+        <id property="id" column="id"/>
+        <result property="question" column="question"/>
+        <result property="optionA" column="optionA"/>
+        <result property="optionB" column="optionB"/>
+        <result property="optionC" column="optionC"/>
+        <result property="optionD" column="optionD"/>
+        <result property="answer" column="answer"/>
+        <result property="score" column="score"/>
+        <result property="type" column="type"/>
+        <association property="paper" javaType="paper">
+            <result property="score" column="paperScore"/>
+            <result property="time" column="time"/>
+            <association property="course" javaType="course">
+                <result property="title" column="title"/>
+            </association>
+        </association>
+        <collection property="studentTests" ofType="studenttest">
+            <result property="answer" column="studentTestAnswer"/>
+            <association property="student" javaType="student">
+                <result property="username" column="username"/>
+            </association>
+        </collection>
+    </resultMap>
+    <select id="queryTestsByStudentIdAndPaperId" parameterType="hashmap"
+            resultMap="map_queryTestsByStudentIdAndPaperId">
+        SELECT
+            t.id,
+            t.question,
+            t.optionA,
+            t.optionB,
+            t.optionC,
+            t.optionD,
+            t.answer,
+            t.score,
+            t.type,
+            p.score AS paperScore,
+            p.time,
+            c.title,
+            s.username,
+            st.answer AS studentTestAnswer
+        FROM db_examination.student_test st
+            INNER JOIN db_examination.student s
+            INNER JOIN db_examination.test t
+            INNER JOIN db_examination.paper p
+            INNER JOIN db_examination.course c
+                ON st.studentId = s.id AND st.testId = t.id AND t.paperId = p.id AND p.courseId = c.id
+        WHERE s.id = #{studentId} AND p.id = #{paperId};
+    </select>
+</mapper>
